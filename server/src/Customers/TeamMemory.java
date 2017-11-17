@@ -26,4 +26,8 @@ public class TeamMemory {
         teams.remove(team);
         return team;
     }
+
+
+
+    // -------------------------------------------------- adjust points ------------------------------------------------
 }
