@@ -23,7 +23,7 @@ public class Main {
     public static void main(String[] args) {
         Log.log("loading questions...");
         QuestionRetriever retriever = new QuestionRetriever(100);
-        questions = retriever.getQuestionPackets(10);
+        questions = retriever.getQuestionPackets(10, question_time);
 
         Log.log("starting server...");
 
