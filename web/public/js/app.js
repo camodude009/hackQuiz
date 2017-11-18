@@ -90,6 +90,12 @@ let app = new Vue({
     this.socket.on("quiz", this.onNextQuiz);
     this.socket.on("matching", this.onMatching);
 
+    let token = getCookie("token");
+    console.log(token);
+    if (token != "") {
+      this.socket.emit("register-by-token", {token}, this.onRegister);
+    }
+
   },
   methods: {
     sendReady() {
@@ -97,28 +103,43 @@ let app = new Vue({
         this.user.namestat = this.user.name ? 0 : 1;
         this.user.info.filter(el => el.value == -1).forEach(e => e.status = 1);
       } else {
+        this.socket.emit("register-user", this.user.info.reduce((json, e) => { json[e.title] = e.value; return json; }, {name: this.user.name}), this.onRegister);
+      }
+    },
+    onRegister(res) {
+      if (res.error) {
+        this.user.error = res.error;
+        this.user.registered = false;
+        $(".user-wrapper").fadeIn();
+      } else {
         this.user.registered = true; // send 'ready' event
-        this.socket.emit("register-user", this.user.info.reduce((json, e) => { json[e.title] = e.value; return json; }, {name: this.user.name}), (res) => {
-          if (res.error)
-            this.user.error = res.error;
-          else
-            $("html").animate({"scrollTop": 0}, 500, () => {
-              $(".user-wrapper").fadeOut();
-            });
+        if (res.username) this.user.name = res.username;
+        setCookie("token", res.token, 60000 * 2);
+        $("html").animate({"scrollTop": 0}, 500, () => {
+          $(".user-wrapper").fadeOut();
         });
       }
     },
     onNextQuiz(next) {
-      console.log(next);
+      //reset quiz
+      this.user.error = null;
+      this.quiz.matching = null;
       this.quiz.startTime = next.startTime;
       this.quiz.remainingTime = this.toTimeString(this.quiz.startTime - Date.now() < 0 ? 0 : this.quiz.startTime - Date.now());
+      console.log(this.quiz.remainingTime);
+
+      //set countdown timer
+      if (this.quiz.timer) clearInterval(this.quiz.timer);
       this.quiz.timer = setInterval(() => {
         this.quiz.remainingTime = this.toTimeString(this.quiz.startTime - Date.now() < 0 ? 0 : this.quiz.startTime - Date.now());
       }, 1000);
       let dur = (this.quiz.startTime - Date.now())/2;
-      console.log(dur);
+
+      //animate countdown
       $("#ll").css("transform", "rotate(0)");
       $("#rl").css("transform", "rotate(0)");
+      $("#rl").css("textIndent", "0");
+      $("#ll").css("textIndent", "0");
 
       $("#ll").animate({"textIndent": "180"}, {
         duration: dur,
@@ -138,11 +159,14 @@ let app = new Vue({
       }, dur);
     },
     onMatching(matching) {
+      //clear timer
       clearInterval(this.quiz.timer);
       this.quiz.remainingTime = "00:00:00";
+
       this.quiz.matching = matching;
     },
     toTimeString(ms) {
+      //format to hh:mm:ss
       let t = Math.round(ms / 1000);
       let s = t%60;
       let m = (t-s)/60%60;
@@ -154,3 +178,26 @@ let app = new Vue({
     }
   }
 })
+
+function setCookie(cname, cvalue, exp) {
+    var d = new Date();
+    d.setTime(d.getTime() + exp);
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}

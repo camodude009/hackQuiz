@@ -23,7 +23,7 @@
       <div class="header">
         <span>hackQuiz</span>
       </div>
-      <div v-if="!quiz.matching" class="countdown-wrapper">
+      <div v-show="!quiz.matching" class="countdown-wrapper">
          <div class="countdown">
           <div class="countdown-loader-wrap">
             <div class="countdown-left-wrap">
@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div v-else class="matching-wrapper">
+      <div v-if="quiz.matching" class="matching-wrapper">
         <span>Hurray!<br />The Quiz is starting!</span>
         <span>Please seat at</span>
         <span>Table {{quiz.matching.table}}</span>
