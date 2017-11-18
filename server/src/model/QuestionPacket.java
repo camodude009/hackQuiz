@@ -24,4 +24,20 @@ public class QuestionPacket extends Packet {
         this.correct = correct;
         this.ms = ms;
     }
+
+    @Override
+    public String toString() {
+        return "QuestionPacket{" +
+                "type=" + type +
+                ", num=" + num +
+                ", total=" + total +
+                ", question='" + question + '\'' +
+                ", a='" + a + '\'' +
+                ", b='" + b + '\'' +
+                ", c='" + c + '\'' +
+                ", d='" + d + '\'' +
+                ", correct=" + correct +
+                ", ms=" + ms +
+                '}';
+    }
 }

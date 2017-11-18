@@ -23,15 +23,17 @@ public class Result extends AppCompatActivity {
 
         String jsonText = getIntent().getExtras().getString("JSON");
         summary = (SummaryPacket) Serializer.deserializePacket(jsonText, SummaryPacket.class);
+        init();
     }
 
-    private void init(int place, int[] points){
-        showPoints(points);
-        setPlace(place);
+    private void init(){
+        showPoints(summary.correct, summary.total);
+        setPlace(summary.place);
     }
 
-    private void showPoints(int[] points){
-        //TODO add Rounds / Points
+    private void showPoints(int correct, int total){
+        TextView summary = (TextView)findViewById(R.id.summary_text);
+        summary.setText( ""+correct+"/"+total);
     }
 
     private void setPlace(int place){

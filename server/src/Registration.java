@@ -1,8 +1,7 @@
-import model.*;
+import model.CountdownPacket;
+import model.RegisterPacket;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -23,12 +22,12 @@ public class Registration extends Thread {
             while (true) {
 
                 Socket client = serverSocket.accept();
-                Log.log("connection recieved");
+                Log.log("connection recieved (" + client.getRemoteSocketAddress().toString() + ")");
 
                 Table t = new Table(client);
                 String message = t.read();
 
-                if (message.startsWith(RegisterPacket.token)) {
+                if (message != null && message.startsWith(RegisterPacket.token)) {
                     RegisterPacket register = (RegisterPacket) Serializer.deserializePacket(message, RegisterPacket.class);
                     t.setTableNum(register.table);
                     t.setName(register.name);

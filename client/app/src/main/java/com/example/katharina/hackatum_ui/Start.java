@@ -20,33 +20,49 @@ public class Start extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        if (getIntent() != null && getIntent().getExtras() != null) {
-            String jsonText = getIntent().getExtras().getString("JSON");
-            countdown = (CountdownPacket) Serializer.deserializePacket(jsonText, CountdownPacket.class);
+        String jsonText = getIntent().getExtras().getString("JSON");
+        countdown = (CountdownPacket) Serializer.deserializePacket(jsonText, CountdownPacket.class);
+        new Timer(countdown.ms/1000).start(); //FIXME
+
+    }
+
+
+    public void setCountdownTextUI(long left) {
+        long minutes = left/60;
+        long seconds = left%60;
+        String formatted = String.format("%02d", minutes)+":"+String.format("%02d", seconds);
+        TextView txt = (TextView)findViewById(R.id.countdownBeforeQuiz);
+        txt.setText(formatted);
+    }
+
+    //Quick and dirty TODO clean
+    private  class Timer extends Thread {
+        long countdown = 440;
+
+        public Timer(long countdown) {
+            this.countdown = countdown;
         }
-        if (countdown != null) {
-            TextView textView = findViewById(R.id.countdown);
-            textView.setText(countdown.getTime());
+
+        @Override
+        public void run() {
+            while( countdown>0 ) {
+                countdown--;
+                //System.out.println(countdown);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setCountdownTextUI(countdown);
+                    }
+                });
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-
-        // use this to start and trigger a service
-        Intent i = new Intent(this, QuizClient.class);
-        // potentially add data to the intent
-        //i.putExtra("KEY1", "Value to be used by the service");
-        startService(i);
-
     }
 
-    public void setTableNumber(int number) {
-        TextView txt = findViewById(R.id.tableNum);
-
-    }
-
-    public void setTime(CountdownPacket countdown) {
-        this.countdown = countdown;
-        TextView txt = findViewById(R.id.countdown);
-        txt.setText(countdown.getTime());
-    }
 }
 

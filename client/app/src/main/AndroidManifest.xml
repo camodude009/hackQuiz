@@ -11,9 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name="com.example.katharina.hackatum_ui.serverinterface.QuizClient" />
+        <service android:name="com.example.katharina.hackatum_ui.serverinterface.QuizClient" android:stopWithTask="true" />
+        <activity android:name=".Music" />
+        <activity android:name=".Color" />
+        <activity android:name=".Bar" />
         <activity android:name=".Question" />
-        <activity android:name=".Start">
+        <activity android:name=".Result" />
+        <activity android:name=".Start" />
+        <activity android:name=".Enter">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -20,13 +20,13 @@ public class CustomApplication extends android.app.Application {
         this.tableNum = tableNum;
     }
 
-    private Queue<Packet> messageQeuue = new ConcurrentLinkedQueue<>();
-    public Queue<Packet> getMessageQeuue() {
-        return messageQeuue;
+    private Queue<Packet> messageQueue = new ConcurrentLinkedQueue<>();
+    public Queue<Packet> getMessageQueue() {
+        return messageQueue;
     }
 
-    public void setMessageQeuue(Queue<Packet> messageQeuue) {
-        this.messageQeuue = messageQeuue;
+    public void setMessageQueue(Queue<Packet> messageQueue) {
+        this.messageQueue = messageQueue;
     }
 
 

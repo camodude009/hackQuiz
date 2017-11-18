@@ -17,9 +17,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +28,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/back"
+                android:id="@+id/music_back"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -78,12 +79,12 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/red"
+                    android:id="@+id/heart"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
-                    android:background="@drawable/rounded_button"
+                    android:background="@drawable/heart"
                     android:backgroundTint="@color/Cinnbar"
                     android:baselineAligned="false"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display2"
@@ -108,12 +109,12 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/orange"
+                    android:id="@+id/neutral_smiley"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
-                    android:background="@drawable/rounded_button"
+                    android:background="@drawable/emoticon_neutral"
                     android:backgroundTint="@android:color/holo_orange_light"
                     android:baselineAligned="false"
                     android:shadowColor="@color/darkBlue"
@@ -155,12 +156,12 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/green"
+                    android:id="@+id/chilli"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
-                    android:background="@drawable/rounded_button"
+                    android:background="@drawable/chili_mild"
                     android:backgroundTint="@android:color/holo_green_light"
                     android:baselineAligned="false"
                     android:lineSpacingExtra="10sp"
@@ -200,22 +201,18 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/purple"
+                    android:id="@+id/handsUp"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
-                    android:background="@drawable/rounded_button"
-                    android:backgroundTint="@android:color/holo_purple"
+                    android:background="@drawable/human_handsup"
+                    android:backgroundTint="@android:color/holo_blue_dark"
                     android:baselineAligned="false"
-                    android:shadowColor="@color/darkBlue"
-                    android:shadowDx="0"
-                    android:shadowDy="0"
-                    android:shadowRadius="0"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                    android:textColorHighlight="@color/Cinnbar"
                     android:textSize="24sp"
                     android:visibility="visible" />
+
             </LinearLayout>
 
             <Space
@@ -248,13 +245,13 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/yellow"
+                    android:id="@+id/sunglasses"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
+                    android:background="@drawable/sunglasses"
                     android:backgroundTint="@color/lightBlue"
-                    android:background = "@drawable/rounded_button"
                     android:baselineAligned="false"
                     android:lineSpacingExtra="10sp"
                     android:shadowColor="@color/darkBlue"
@@ -285,15 +282,20 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/blue"
+                    android:id="@+id/poop"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
-                    android:backgroundTint="@android:color/holo_blue_dark"
-                    android:background = "@drawable/rounded_button"
+                    android:background="@drawable/poop"
+                    android:backgroundTint="@android:color/holo_purple"
                     android:baselineAligned="false"
+                    android:shadowColor="@color/darkBlue"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColorHighlight="@color/Cinnbar"
                     android:textSize="24sp"
                     android:visibility="visible" />
 
@@ -313,6 +315,7 @@
                     android:textColorHighlight="@color/Cinnbar"
                     android:textSize="24sp"
                     android:visibility="invisible" />
+
             </LinearLayout>
 
             <Space

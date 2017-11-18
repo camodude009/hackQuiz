@@ -9,16 +9,16 @@ public class Serializer {
     }
 
     public static String getTokenFromPacket(String json) {
-        return json.substring(0,3);
-    }
-
-    public static String getJsonFromPacket(String json) {
-        return json.substring(3);
+        return json.substring(0, 3);
     }
 
     public static Packet deserializePacket(String json, Class c) {
         //Json must be packet lol
-        return (Packet)gson.fromJson(getJsonFromPacket(json),c) ;
+        return (Packet) gson.fromJson(getJsonFromPacket(json), c);
+    }
+
+    public static String getJsonFromPacket(String json) {
+        return json.substring(3);
     }
 
 }

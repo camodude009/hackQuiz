@@ -1,4 +1,3 @@
-import model.AnswerPacket;
 import model.Packet;
 import model.QuestionPacket;
 import model.SummaryPacket;
@@ -12,8 +11,8 @@ public class Main {
     public final static List<Table> tables = new ArrayList<>();
 
 
-    public static final long registration_time = 1000 * 60 * 5;
-    public static final long question_time = 1000 * 60;
+    public static final long registration_time = 1000 * 30;
+    public static final long question_time = 1000 * 20;
 
     public static List<QuestionPacket> questions;
     private static QuestionPacket currentQuestion;
@@ -21,9 +20,27 @@ public class Main {
     private static long start_time;
 
     public static void main(String[] args) {
+
+        /*
+        QuizHttpServer httpServer = new QuizHttpServer(8000);
+
+        httpServer.onMatching(matching -> {
+            Log.log("matching recieved");
+            Log.log(matching.toString());
+            // play();
+        });
+        */
+
+        play();
+
+    }
+
+    public static void play() {
         Log.log("loading questions...");
+
+
         QuestionRetriever retriever = new QuestionRetriever(100);
-        questions = retriever.getQuestionPackets(10);
+        questions = retriever.getQuestionPackets(3, question_time);
 
         Log.log("starting server...");
 
@@ -38,11 +55,14 @@ public class Main {
 
         for (int i = 0; i < questions.size(); i++) {
             currentQuestion = questions.get(i);
+            Log.log("posing question " + i + "...");
             synchronized (tables) {
                 for (Table t : tables) {
-                    synchronized (t.packetQueue) {
-                        t.packetQueue.add(currentQuestion);
-                        t.packetQueue.notifyAll();
+                    if (t.isRunning()) {
+                        synchronized (t.packetQueue) {
+                            t.packetQueue.add(currentQuestion);
+                            t.packetQueue.notifyAll();
+                        }
                     }
                 }
             }
@@ -50,13 +70,14 @@ public class Main {
         }
 
         synchronized (tables) {
+            System.out.println("creating rankings...");
             tables.sort((a, b) -> {
                 return Integer.compare(b.getScore(), a.getScore());
             });
 
             for (Table t : tables) {
                 synchronized (t.packetQueue) {
-                    t.packetQueue.add(new SummaryPacket(questions.size(), t.getScore(), tables.indexOf(t)));
+                    t.packetQueue.add(new SummaryPacket(questions.size(), t.getScore(), tables.indexOf(t) + 1));
                     t.packetQueue.notifyAll();
                 }
             }
@@ -64,7 +85,7 @@ public class Main {
     }
 
     public static void sleep(long millis) {
-        Log.log("sleeping for" + millis + "ms");
+        Log.log("sleeping for " + millis / 1000 + "s");
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {

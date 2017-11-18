@@ -1,9 +1,13 @@
 package com.example.katharina.hackatum_ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.example.katharina.hackatum_ui.model.ServiceRequestPacket;
 
 /**
  * Created by Katharina on 18/11/2017.
@@ -19,19 +23,22 @@ public class Bar extends AppCompatActivity {
     }
 
     private void init(){
-        Button back = findViewById(R.id.back);
+        Button back = findViewById(R.id.bar_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO transition to activity_question => remember old states?
+             finish();
             }
         });
+
+        final CustomApplication ca = (CustomApplication)getApplication();
 
         Button bartender = findViewById(R.id.bartender);
         bartender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO send message to server (bartender)
+             ca.getMessageQueue().add(new ServiceRequestPacket(ServiceRequestPacket.CALL_BARKEEPER));
+                Toast.makeText(Bar.this, "The bartender will be with you shortly", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -39,7 +46,8 @@ public class Bar extends AppCompatActivity {
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO transition to activity_order_drinks
+                ca.getMessageQueue().add(new ServiceRequestPacket(ServiceRequestPacket.CALL_ORDER_DRINK));
+                Toast.makeText(Bar.this, "The waiter will be with you shortly", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -51,11 +59,19 @@ public class Bar extends AppCompatActivity {
             }
         });
 
-        Button colour = findViewById(R.id.colour);
-        colour.setOnClickListener(new View.OnClickListener() {
+        Button color = findViewById(R.id.colour);
+        color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO transition to activity_colour
+                Button fancy = findViewById(R.id.colour);
+                fancy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent dialogIntent = new Intent(Bar.this, Color.class);
+                        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(dialogIntent);
+                    }
+                });
             }
         });
 
@@ -63,7 +79,16 @@ public class Bar extends AppCompatActivity {
         music.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO transition to activity_music
+
+                Button fancy = findViewById(R.id.music);
+                fancy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent dialogIntent = new Intent(Bar.this, Music.class);
+                        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(dialogIntent);
+                    }
+                });
             }
         });
     }
