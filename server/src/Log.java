@@ -4,7 +4,7 @@ import java.util.TimeZone;
 
 public class Log {
 
-    //Test
+    //Test2
 
     public static void log(Object o) {
         System.out.println(getNiceDateTime(System.currentTimeMillis()) + "\t" + o.toString());
