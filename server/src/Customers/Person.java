@@ -35,44 +35,44 @@ public class Person {
     public static final int WINE = 45;
 
 
+    public final String name;
+    public final int[] data;
 
-        public final int[] data;
+    public Person(String name, int gender, int age, int hair, int color, int alcohol) {
+        this.name = name;
+        if (gender < 0 || gender > 2) throw new IllegalArgumentException("non-existing gender");
+        if (age < 5 || age > 8) throw new IllegalArgumentException("non-existing age");
+        if (hair < 10 || hair > 14) throw new IllegalArgumentException("non-existing hair");
+        if (color < 20 || color > 28) throw new IllegalArgumentException("non-existing color");
+        if (alcohol < 40 || alcohol > 45) throw new IllegalArgumentException("non-existing alcohol");
 
-
-        public Person(int gender, int age,int hair, int color, int alcohol){
-            if(gender<0|| gender >2) throw new IllegalArgumentException("non-existing gender");
-            if(age<5|| age >8) throw new IllegalArgumentException("non-existing age");
-            if(hair<10|| hair >14) throw new IllegalArgumentException("non-existing hair");
-            if(color<20|| color >28) throw new IllegalArgumentException("non-existing color");
-            if(alcohol<40|| alcohol>45) throw new IllegalArgumentException("non-existing alcohol");
-
-            data = new int[5];
-            data[0] = gender;
-            data[1] = age;
-            data[2] = hair;
-            data[3] = color;
-            data[4] = alcohol;
-        }
-
-        // --------------------------------------------- getter --------------------------------------------------------
-
-    public int getGender(){
-            return data[1];
+        data = new int[5];
+        data[0] = gender;
+        data[1] = age;
+        data[2] = hair;
+        data[3] = color;
+        data[4] = alcohol;
     }
 
-    public int getAge(){
+    // --------------------------------------------- getter --------------------------------------------------------
+
+    public int getGender() {
         return data[1];
     }
 
-    public int getHair(){
+    public int getAge() {
+        return data[1];
+    }
+
+    public int getHair() {
         return data[2];
     }
 
-    public int getColor(){
+    public int getColor() {
         return data[3];
     }
 
-    public int getAlcohol(){
+    public int getAlcohol() {
         return data[4];
     }
 }

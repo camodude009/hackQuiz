@@ -1,6 +1,7 @@
 package Evaluation;
 
 public class Round {
+
     private Boolean[] answers; // right := true; false:= false
 
 
