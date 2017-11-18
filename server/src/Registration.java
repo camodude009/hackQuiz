@@ -1,6 +1,4 @@
-import model.AnswerPacket;
-import model.RegisterPacket;
-import model.ServiceRequestPacket;
+import model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,64 +9,54 @@ import java.net.Socket;
 public class Registration extends Thread {
 
     public void run() {
-        Log.log("creating packet handler...");
-        TableHandler tableHandler = (String message, Table t) -> {
-            String token = message.substring(0, 3);
-
-
-            switch (token) {
-                case RegisterPacket.token:
-                    RegisterPacket register = (RegisterPacket) Serializer.deserializePacket(message, RegisterPacket.class);
-                    t.setTableNum(register.table);
-                    t.setName(register.name);
-                    break;
-
-                case ServiceRequestPacket.token:
-                    ServiceRequestPacket service_request = (ServiceRequestPacket) Serializer.deserializePacket(message, ServiceRequestPacket.class);
-                    System.out.println("Request recieved from " + t.getNumber() + ": " + service_request);
-                    //TODO: further forwarding (LED, etc.)
-                    break;
-
-                case AnswerPacket.token:
-                    //TODO: set answer
-                    break;
-            }
-        };
 
         Log.log("starting registration thread...");
 
-        Log.log("creating server socket...");
-        ServerSocket serverSocket = null;
         try {
-            serverSocket = new ServerSocket(Main.port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        Log.log("initialised socket");
-        Log.log("waiting for connections...");
+            Log.log("creating server socket...");
+            ServerSocket serverSocket = new ServerSocket(Main.port);
 
-        while (true) {
-            try {
+            Log.log("initialised socket");
+            Log.log("waiting for connections...");
+
+            while (true) {
 
                 Socket client = serverSocket.accept();
                 Log.log("connection recieved");
 
-                Table t = new Table(client, tableHandler);
+                Table t = new Table(client);
+                String message = t.read();
 
-                synchronized (Main.tables) {
-                    if (Main.tables.contains(t)) {
-                        Main.tables.get(Main.tables.indexOf(t)).setSocket(client);
-                        Log.log("re - registered" + t.toString());
-                    } else {
-                        Main.tables.add(t);
-                        Log.log("registered" + t.toString());
+                if (message.startsWith(RegisterPacket.token)) {
+                    RegisterPacket register = (RegisterPacket) Serializer.deserializePacket(message, RegisterPacket.class);
+                    t.setTableNum(register.table);
+                    t.setName(register.name);
+                    synchronized (Main.tables) {
+                        if (Main.tables.contains(t)) {
+                            Main.tables.get(Main.tables.indexOf(t)).setSocket(client);
+                            Log.log("re - registered" + t.toString());
+                        } else {
+                            Main.tables.add(t);
+                            Log.log("registered" + t.toString());
+                        }
+                    }
+                    t.start();
+
+                    synchronized (t.packetQueue) {
+                        //TODO: get proper countdown time from main
+                        if (System.currentTimeMillis() < 1000) {
+                            t.packetQueue.add(new CountdownPacket(0));
+                        } else {
+                            t.packetQueue.add(Main.getCurrentQuestion());
+                        }
                     }
                 }
-
-            } catch (IOException e) {
-                Log.log(e.getMessage());
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
     }
 }

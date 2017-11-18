@@ -7,11 +7,12 @@ public class QuestionPacket extends Packet {
     public int num;
     public int total;
     public String question;
-    public String a, b, c ,d;
+    public String a, b, c, d;
     public int correct;
     public long ms;
+    public int id;
 
-    public QuestionPacket(int type, int num, int total, String question, String a, String b, String c, String d, int correct, long ms) {
+    public QuestionPacket(int type, int num, int total, String question, String a, String b, String c, String d, int correct, long ms, int id) {
         setToken(this.token);
         this.type = type;
         this.num = num;
@@ -23,5 +24,6 @@ public class QuestionPacket extends Packet {
         this.d = d;
         this.correct = correct;
         this.ms = ms;
+        this.id = id;
     }
 }
