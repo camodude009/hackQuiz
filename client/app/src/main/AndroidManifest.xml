@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <service android:name="com.example.katharina.hackatum_ui.serverinterface.QuizClient" />
         <activity android:name=".Question" />
-        <activity android:name=".Start">
+        <activity android:name=".Enter">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
