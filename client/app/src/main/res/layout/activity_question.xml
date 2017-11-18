@@ -76,6 +76,16 @@
             android:layout_width="match_parent"
             android:layout_height="15dp" />
 
+        <ProgressBar
+            android:id="@+id/countdown_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6.2"
+            android:foregroundTint="@color/lightBlue"
+            android:progressTint="@color/colorAccent"
+            android:visibility="visible" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp" />
@@ -143,16 +153,6 @@
                 android:textSize="18sp"
                 tools:autoSizePresetSizes="0" />
         </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/countdown_bar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="6.2"
-            android:foregroundTint="@color/lightBlue"
-            android:progressTint="@color/colorAccent"
-            android:visibility="visible" />
 
     </LinearLayout>
 
