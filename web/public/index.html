@@ -9,12 +9,67 @@
   <meta name="author" content="Kilian Schulte" />
   <meta name="description" content="User Registration for hackQuiz" />
 
+    <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/styles.css">
-  <script src="js/app.js"></script>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/vue.js"></script>
+  <script src="js/socket.io.js"></script>
 
 </head>
 <body>
-
-
+  <div id="vue">
+    <div class="nextquiz-wrapper">
+      <div class="header">
+        <span>hackQuiz</span>
+      </div>
+      <div v-if="!quiz.matching" class="countdown-wrapper">
+         <div class="countdown">
+          <div class="countdown-loader-wrap">
+            <div class="countdown-left-wrap">
+              <div id="ll" class="countdown-loader"></div>
+            </div>
+            <div class="countdown-right-wrap">
+              <div id="rl" class="countdown-loader"></div>
+            </div>
+            <div class="countdown-time">
+              <span>Next Quiz</span>
+              <span >{{quiz.remainingTime}}</span>
+              <span>{{user.name && user.registered ? "You: "+user.name : quiz.remainingTime != "00:00:00" ? "Register now!" : "Come back later!"}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else class="matching-wrapper">
+        <span>Hurray!<br />The Quiz is starting!</span>
+        <span>Please seat at</span>
+        <span>Table {{quiz.matching.table}}</span>
+      </div>
+    </div>
+    <div class="user-wrapper">
+      <span class="user-prompt" v-on:click="scrollDown">Lets go!<br /><i class="fa fa-angle-down"></i></span>
+      <div class="tooths">
+      </div>
+      <div class="user">
+        <div class="user-prop">
+          <span>How to call you? {{!user.name && user.namestat == 1 ? "- Required!" : ""}}</span>
+          <input type="text" v-model="user.name" />
+        </div>
+        <div class="user-prop" v-for="prop in user.info">
+          <span>{{prop.title + (prop.value == -1 && prop.status == 1 ? " - Required!" : "")}}</span>
+          <select v-if="prop.options" v-model="prop.value">
+            <option v-for="o in prop.options" v-bind:value="o.val">
+              {{o.title}}
+            </option>
+          </select>
+        </div>
+        <div class="user-submit">
+          <span v-if="user.error">{{user.error}}</span>
+          <input type="button" value="Register" v-on:click="sendReady" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/app.js"></script>
 </body>
 </html>
