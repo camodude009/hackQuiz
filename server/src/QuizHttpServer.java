@@ -1,7 +1,11 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.util.Arrays;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -11,8 +15,14 @@ public class QuizHttpServer {
   private HttpServer server;
   private MatchingListener matchingListener;
 
+  private static Gson gson = new Gson();
+
   public QuizHttpServer(int port) {
-    server = HttpServer.create(new InetSocketAddress(port), 0);
+    try {
+      server = HttpServer.create(new InetSocketAddress(port), 0);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
     server.createContext("/matching", new MatchingHandler());
 
@@ -28,7 +38,9 @@ public class QuizHttpServer {
       while ((inputLine = in.readLine()) != null)
           json += inputLine;
       in.close();
+
       t.sendResponseHeaders(200, 0);
+      t.close();
 
       MatchingPacket matching =  (MatchingPacket) gson.fromJson(json, MatchingPacket.class);
 
@@ -43,28 +55,42 @@ public class QuizHttpServer {
   }
 
   public interface MatchingListener {
-    onMatchingCompleted(MatchingPacket matching);
+    void onMatchingCompleted(MatchingPacket matching);
   }
 
   public class MatchingPacket {
 
-    public MatchedTables[] matchedTables;
+    public MatchedTablesPacket[] matching;
 
     public MatchingPacket(MatchedTablesPacket[] mat) {
-      matchedTables = mat;
+      matching = mat;
     }
 
     public class MatchedTablesPacket {
 
-      public int tableId;
-      public String[] usernames;
+      public int table;
+      public String[] users;
 
       public MatchedTablesPacket(int tab, String[] usn) {
-        tableId = tab;
-        usernames = usn;
+        table = tab;
+        users = usn;
       }
 
+
+      @Override
+      public String toString() {
+        return "MatchedTablesPacket{" +
+                "tableId=" + table +
+                ", usernames=" + Arrays.toString(users) +
+                '}';
+      }
     }
 
+    @Override
+    public String toString() {
+      return "MatchingPacket{" +
+              "matchedTables=" + Arrays.toString(matching) +
+              '}';
+    }
   }
 }

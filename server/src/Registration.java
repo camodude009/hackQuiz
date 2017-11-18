@@ -28,7 +28,7 @@ public class Registration extends Thread {
                 Table t = new Table(client);
                 String message = t.read();
 
-                if (message.startsWith(RegisterPacket.token)) {
+                if (message != null && message.startsWith(RegisterPacket.token)) {
                     RegisterPacket register = (RegisterPacket) Serializer.deserializePacket(message, RegisterPacket.class);
                     t.setTableNum(register.table);
                     t.setName(register.name);

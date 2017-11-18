@@ -13,25 +13,29 @@ public class Test {
 
         QuestionRetriever r = new QuestionRetriever(100);
         questions = r.getQuestionPackets(100, 60 * 1000);
-        for (QuestionPacket q : questions) {
-            Log.log(q);
-        }
+        Log.log("loaded " + questions.size() + " questions");
 
         ServerSocket serverSocket = null;
-        try {
-            serverSocket = new ServerSocket(4444);
-            Socket client = serverSocket.accept();
 
-            Table t = new Table(client);
-            t.start();
-            synchronized (t.packetQueue) {
-                t.packetQueue.add(questions.get(0));
+        try {
+            Log.log("creating server socket...");
+            serverSocket = new ServerSocket(4444);
+
+            while (true) {
+                Socket client = serverSocket.accept();
+                Log.log("client accepted");
+
+                Table t = new Table(client);
+                Log.log("starting client...");
+                t.start();
+                synchronized (t.packetQueue) {
+                    t.packetQueue.add(questions.get(0));
+                }
             }
-            
             //String message = t.read();
             //Log.log(message);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.log(e.getMessage());
         }
 
     }

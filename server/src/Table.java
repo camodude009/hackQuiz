@@ -66,7 +66,7 @@ public class Table {
         }
     }
 
-    public int getScore(){
+    public int getScore() {
         return score;
     }
 
@@ -78,8 +78,17 @@ public class Table {
 
         messageReceiver = new Thread(() -> {
             while (running) {
+                int numIllegitamateCalls = 0;
                 String s = read();
-                handle(s);
+                if (s != null) {
+                    //Log.log("recieved packet: " + s);
+                    handle(s);
+                } else {
+                    numIllegitamateCalls++;
+                    if (numIllegitamateCalls > 500) {
+                        terminate();
+                    }
+                }
             }
         });
 
@@ -88,7 +97,7 @@ public class Table {
                 synchronized (packetQueue) {
                     while (running && packetQueue.isEmpty()) {
                         try {
-                            wait();
+                            packetQueue.wait();
                         } catch (InterruptedException e) {
                             Log.log(e.getMessage());
                         }
@@ -97,6 +106,7 @@ public class Table {
                         Packet p = packetQueue.poll();
                         String message = Serializer.serializeObject(p);
                         write(message);
+                        //Log.log("sent packet: " + message);
                     }
                 }
             }
@@ -110,11 +120,12 @@ public class Table {
         } catch (IOException e) {
             Log.log(e.getMessage());
         }
-        return "";
+        return null;
     }
 
     public void write(String s) {
-        out.write(s);
+        out.write(s + "\n");
+        out.flush();
     }
 
     public void start() {
@@ -124,6 +135,7 @@ public class Table {
     }
 
     public void terminate() {
+        Log.log("table " + table + " terminated");
         running = false;
         try {
             socket.close();

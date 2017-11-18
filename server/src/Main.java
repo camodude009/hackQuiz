@@ -21,7 +21,20 @@ public class Main {
     private static long start_time;
 
     public static void main(String[] args) {
+
+        QuizHttpServer httpServer = new QuizHttpServer(8000);
+        httpServer.onMatching(matching -> {
+            Log.log("matching recieved");
+            Log.log(matching.toString());
+            // play();
+        });
+
+    }
+
+    public static void play() {
         Log.log("loading questions...");
+
+
         QuestionRetriever retriever = new QuestionRetriever(100);
         questions = retriever.getQuestionPackets(10, question_time);
 
