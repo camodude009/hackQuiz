@@ -2,8 +2,7 @@ package model;
 
 public class Packet {
 
-    transient  String token;
-
+    transient String token;
 
 
     public String getToken() {

@@ -1,8 +1,11 @@
 import com.google.gson.Gson;
 import model.QuestionPacket;
 
-import java.net.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -25,6 +28,23 @@ public class QuestionRetriever {
     public void retrieveNewQuestions(int amount) {
         usedQuestions.clear();
         questionListPacket = makeAPICall(amount);
+    }
+
+    private APIQuestionListPacket makeAPICall(int amount) {
+        try {
+            URL questions = new URL("https://opentdb.com/api.php?amount=" + amount + "&category=18&type=multiple");
+            URLConnection qc = questions.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(qc.getInputStream()));
+            String inputLine;
+            String json = "";
+            while ((inputLine = in.readLine()) != null)
+                json += inputLine;
+            in.close();
+            return (APIQuestionListPacket) gson.fromJson(json, APIQuestionListPacket.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public ArrayList<QuestionPacket> getQuestionPackets(int amount, long ms) {
@@ -51,23 +71,6 @@ public class QuestionRetriever {
 
         }
         return questionList;
-    }
-
-    private APIQuestionListPacket makeAPICall(int amount) {
-        try {
-            URL questions = new URL("https://opentdb.com/api.php?amount=" + amount + "&category=18&type=multiple");
-            URLConnection qc = questions.openConnection();
-            BufferedReader in = new BufferedReader(new InputStreamReader(qc.getInputStream()));
-            String inputLine;
-            String json = "";
-            while ((inputLine = in.readLine()) != null)
-                json += inputLine;
-            in.close();
-            return (APIQuestionListPacket) gson.fromJson(json, APIQuestionListPacket.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public class APIQuestionListPacket {

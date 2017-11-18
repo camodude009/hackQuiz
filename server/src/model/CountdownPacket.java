@@ -1,6 +1,6 @@
 package model;
 
-public class CountdownPacket extends Packet{
+public class CountdownPacket extends Packet {
     public static final String token = "CND";
 
     public long ms;
