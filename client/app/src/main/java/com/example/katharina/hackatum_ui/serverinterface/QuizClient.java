@@ -27,6 +27,7 @@ import java.util.Queue;
 //TODO countdown quiz
 //Socket open at Registration
 public class QuizClient extends Service {
+    static boolean initThreadRunning = false;
     Thread readThread = null;
     Thread writeThread = null;
 
@@ -50,14 +51,13 @@ public class QuizClient extends Service {
 
 
     public class InitThread extends Thread {
-        boolean running = false;
 
         @Override
         public void run() {
             super.run();
             //Singleton
-            if (running==true) {return;}
-            else {running = true;}
+            if (QuizClient.initThreadRunning==true) {return;}
+            else {QuizClient.initThreadRunning = true;}
 
             //Wait for socket connection
             Socket socket = null;
@@ -91,6 +91,7 @@ public class QuizClient extends Service {
             writeThread.start();
             readThread = new ReadThread(socket, input, output);
             readThread.start();
+            QuizClient.initThreadRunning=false;
             return; //Quit thread
         }
 
@@ -98,6 +99,7 @@ public class QuizClient extends Service {
 
 
     public class WriteThread extends Thread {
+        boolean running = false;
         Socket socket = null;
         BufferedReader input = null;
         PrintWriter output = null;
@@ -114,7 +116,6 @@ public class QuizClient extends Service {
             Queue<Packet> toBeSendQueue = ((CustomApplication) getApplication()).getMessageQueue();
             super.run();
 
-            boolean running = true;
             while (running) {
 
                 try {
