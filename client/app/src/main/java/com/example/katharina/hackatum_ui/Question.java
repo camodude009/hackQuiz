@@ -1,6 +1,7 @@
 package com.example.katharina.hackatum_ui;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
