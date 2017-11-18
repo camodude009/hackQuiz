@@ -21,19 +21,19 @@ public class QuestionRetriever {
         this(20);
     }
 
-    public QuestionRetriever(int amount) {
+    public QuestionRetriever(int amount, boolean hard) {
         usedQuestions = new ArrayList<Integer>();
-        retrieveNewQuestions(amount);
+        retrieveNewQuestions(amount, hard);
     }
 
-    public void retrieveNewQuestions(int amount) {
+    public void retrieveNewQuestions(int amount, boolean hard) {
         usedQuestions.clear();
-        questionListPacket = makeAPICall(amount);
+        questionListPacket = makeAPICall(amount, hard);
     }
 
-    private APIQuestionListPacket makeAPICall(int amount) {
+    private APIQuestionListPacket makeAPICall(int amount, boolean hard) {
         try {
-            URL questions = new URL("https://opentdb.com/api.php?amount=" + amount + "&category=18&type=multiple");
+            URL questions = new URL("https://opentdb.com/api.php?amount=" + amount + "&difficulty=" + (hard ? "hard" : "medium") + "&category=18&type=multiple");
             URLConnection qc = questions.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(qc.getInputStream()));
             String inputLine;
