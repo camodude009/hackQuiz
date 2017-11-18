@@ -46,7 +46,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="6" />
+            android:layout_weight="6.1" />
 
         <TextView
             android:layout_width="match_parent"
@@ -55,6 +55,14 @@
             android:text="How is your mood?"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6.3"
+            android:text="Button"
+            android:visibility="invisible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,23 +75,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
+                android:background="@drawable/rounded_button"
                 android:backgroundTint="@android:color/black" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="Button"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/mood_brown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
+                android:background="@drawable/rounded_button"
                 android:backgroundTint="@color/DarkOrange" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="Button"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/mood_red"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
+                android:background="@drawable/rounded_button"
                 android:backgroundTint="@android:color/holo_red_dark" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6.3"
+            android:text="Button"
+            android:visibility="invisible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -96,23 +131,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
+                android:background="@drawable/rounded_button"
                 android:backgroundTint="@android:color/holo_green_light" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="Button"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/mood_yellow"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
+                android:background="@drawable/rounded_button"
                 android:backgroundTint="@color/lightBlue" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="Button"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/mood_orange"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
+                android:background="@drawable/rounded_button"
                 android:backgroundTint="@color/Ecstasy" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6.3"
+            android:text="Button"
+            android:visibility="invisible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,21 +186,40 @@
                 android:id="@+id/mood_lightBlue"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="5"
+                android:background="@drawable/rounded_button"
                 android:backgroundTint="@color/Blue_Mediu" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="Button"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/mood_blue"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="5"
+                android:background="@drawable/rounded_button"
                 android:backgroundTint="@color/colorPrimaryDark" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="Button"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/mood_pink"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="5"
+                android:background="@drawable/rounded_button"
                 android:backgroundTint="@color/colorAccent" />
 
         </LinearLayout>
@@ -147,7 +228,7 @@
             android:id="@+id/button10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="6"
+            android:layout_weight="6.3"
             android:visibility="invisible" />
 
     </LinearLayout>
