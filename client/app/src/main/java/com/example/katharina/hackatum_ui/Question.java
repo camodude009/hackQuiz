@@ -111,12 +111,11 @@ public class Question extends AppCompatActivity {
     }
 
     public void sendAnswer(int answer){
-        if (answered==false) {
+        //if (answered==false) {
             CustomApplication ca = (CustomApplication)getApplication();
             AnswerPacket ap = new AnswerPacket(answer, question.num, ca.getTableNum());
             ca.getMessageQueue().add(ap); //Send answer message
-            answered = true;
-        }
+        //}
     }
 
 

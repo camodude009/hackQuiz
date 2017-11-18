@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name="com.example.katharina.hackatum_ui.serverinterface.QuizClient" />
+        <activity android:name=".Color" />
+        <activity android:name=".Music" />
         <activity android:name=".Bar" />
         <activity android:name=".Question" />
         <activity android:name=".Result" />

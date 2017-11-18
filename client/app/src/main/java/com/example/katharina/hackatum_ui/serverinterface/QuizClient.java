@@ -23,6 +23,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Queue;
 
+//FIXME kill client on exit
+//TODO countdown quiz
+//Socket open at Registration
 public class QuizClient extends Service {
     Thread readThread = null;
     Thread writeThread = null;
@@ -70,9 +73,9 @@ public class QuizClient extends Service {
                     output = new PrintWriter(new DataOutputStream(socket.getOutputStream()));
                     break;
                 } catch (UnknownHostException u) {
-                    System.out.println(u);
+                    System.out.println("Init debug: "+u);
                 } catch (IOException i) {
-                    System.out.println(i);
+                    System.out.println("Init debug: "+i);
                 }
                 try {
                     Thread.sleep(1000);
@@ -85,7 +88,9 @@ public class QuizClient extends Service {
 
             //=> Socket established, start read and write thread
             writeThread = new WriteThread(socket, input, output);
+            writeThread.start();
             readThread = new ReadThread(socket, input, output);
+            readThread.start();
             return; //Quit thread
         }
 
@@ -112,7 +117,6 @@ public class QuizClient extends Service {
             boolean running = true;
             while (running) {
 
-                String line = null;
                 try {
                     //Write to socket:
                     if (!toBeSendQueue.isEmpty()) {
