@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.katharina.hackatum_ui.CustomApplication;
 import com.example.katharina.hackatum_ui.Question;
 import com.example.katharina.hackatum_ui.Result;
 import com.example.katharina.hackatum_ui.Start;
 import com.example.katharina.hackatum_ui.model.CountdownPacket;
+import com.example.katharina.hackatum_ui.model.Packet;
 import com.example.katharina.hackatum_ui.model.QuestionPacket;
 import com.example.katharina.hackatum_ui.model.SummaryPacket;
 
@@ -21,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Queue;
 
 public class QuizClient extends Service {
 
@@ -50,6 +53,8 @@ public class QuizClient extends Service {
 
         @Override
         public void run() {
+            Queue<Packet> toBeSendQueue = ((CustomApplication)getApplication()).getMessageQeuue();
+
             super.run();
 
             init("131.159.211.197", 4444);
@@ -62,15 +67,23 @@ public class QuizClient extends Service {
                     //Read from socket
                     System.out.println("Reading buffer");
                     line = input.readLine();
-                    System.out.println("Packet received:"+line);
 
-                    //Write to socket
-                    //TODO write seocket stuff
+                    //Write to socket:
+                    if (!toBeSendQueue.isEmpty()) {
+                        Packet toBeSent = toBeSendQueue.poll();
+                        System.out.println("Found packet to be sent:"+ toBeSent);
+                        String json = Serializer.serializeObject(toBeSent);
+                        output.write(toBeSent+"\n");
+                        output.flush();
+                        System.out.println("Sent Json packet: "+json);
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    init("131.159.211.197", 4444); //retry connection
                 }
 
+                //Receiving code
                 if( line!=null && !line.isEmpty()) {
                     System.out.println("Packet received:"+line);
                     switch( Serializer.getTokenFromPacket(line) ) {
@@ -101,6 +114,12 @@ public class QuizClient extends Service {
                     }
 
 
+                }
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
 
             }
