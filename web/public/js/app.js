@@ -1,6 +1,4 @@
 
-let SERVER_HOST = "ws://localhost:80";
-
 let app = new Vue({
   el: "#vue",
   data: {
@@ -80,12 +78,12 @@ let app = new Vue({
       matching: null,
       remainingTime: "0",
       startTime: null,
-      timer: null //used for updating 'remainingTime'
+      timer: null, //used for updating 'remainingTime'
+      animTimeout: null
     }
   },
   created() {
-
-    this.socket = io(SERVER_HOST);
+    this.socket = io("ws://"+window.location.hostname+":80");
 
     this.socket.on("quiz", this.onNextQuiz);
     this.socket.on("matching", this.onMatching);
@@ -114,6 +112,7 @@ let app = new Vue({
       } else {
         this.user.registered = true; // send 'ready' event
         if (res.username) this.user.name = res.username;
+        if (res.matching) this.quiz.matching = res.matching;
         setCookie("token", res.token, 60000 * 2);
         $("html").animate({"scrollTop": 0}, 500, () => {
           $(".user-wrapper").fadeOut();
@@ -136,8 +135,9 @@ let app = new Vue({
       let dur = (this.quiz.startTime - Date.now())/2;
 
       //animate countdown
-      $("#ll").css("transform", "rotate(0)");
-      $("#rl").css("transform", "rotate(0)");
+      clearTimeout(this.quiz.animTimeout);
+      $("#ll").stop().css("transform", "rotate(0)");
+      $("#rl").stop().css("transform", "rotate(0)");
       $("#rl").css("textIndent", "0");
       $("#ll").css("textIndent", "0");
 
@@ -148,7 +148,7 @@ let app = new Vue({
           $(this).css('transform','rotate('+now+'deg)');
         }
       });
-      setTimeout(() => {
+      this.quiz.animTimeout = setTimeout(() => {
         $("#rl").animate({"textIndent": "180"}, {
           duration: dur,
           easing: "linear",
@@ -161,6 +161,7 @@ let app = new Vue({
     onMatching(matching) {
       //clear timer
       clearInterval(this.quiz.timer);
+      clearTimeout(this.quiz.animTimeout);
       this.quiz.remainingTime = "00:00:00";
 
       this.quiz.matching = matching;

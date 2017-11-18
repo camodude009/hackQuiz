@@ -13,15 +13,15 @@ http.listen(80, () => console.log('listening on *:80'));
 let server = io(http);
 
 let tables = [{
-  id: 1,
-  seats: 2
-},{
-  id: 2,
-  seats: 3
-},{
-  id: 3,
-  seats: 3
-}];
+	  id: 1,
+	  seats: 2
+	},{
+	  id: 2,
+	  seats: 4
+	},{
+	  id: 3,
+	  seats: 3
+	}];
 
 let users = [{info: {
   name: "a",
@@ -47,23 +47,36 @@ let quiz = {
 
 //configure next quiz
 app.post("/config/quiz", (req, res) => {
-  console.log(req.body)
+  if (!quiz.running && req.body && req.body.startTime) {
+    newQuiz(Date.now() + parseInt(req.body.startTime));
+    console.log("Quiz: ", quiz);
+  }
+  res.end();
 });
 
 //configure tables
 app.post("/config/tables", (req, res) => {
-  console.log(req.body);
+  if (!quiz.running && req.body && req.body.tables) {
+    tables = req.body.tables;
+    console.log("Tables: ", tables);
+  }
+  res.end();
 });
 
-app.get("/remove", (req, res) => {
-  console.log(req.params);
-})
+app.post("/config/remove", (req, res) => {
+  if (req.body && req.body.username && users.find(u => u.info && u.info.name == req.body.username)) {
+    users.splice(users.indexOf(users.find(u => u.info && u.info.name == req.body.username)), 1);
+    console.log("Remove: ",req.body.username)
+    res.send(users.filter(u => u.info).map(u => u.info));
+  } else {
+    res.end();
+  }
+});
 
 //when quiz is starting
-setInterval(() => {
+function newQuiz(startTime) {
+  quiz.startTime = startTime;
   quiz.running = false;
-  quiz.startTime = Date.now()+20000;
-  console.log(quiz.startTime);
   users.filter(el => el.socket).forEach(u => u.socket.emit("quiz", {startTime: quiz.startTime}));;
   onQuizStart(() => {
     quiz.running = true;
@@ -73,11 +86,13 @@ setInterval(() => {
       console.log(quiz.matching);
       //send table numbers to all users
       users.filter(el => el.info).forEach(usr => {
-        if (usr.socket) usr.socket.emit("matching", {table: quiz.matching.find(m => m.users.find(u => u == usr.info.name)).table});
+        usr.matching = {table: quiz.matching.find(m => m.users.find(u => u == usr.info.name)).table};
+        if (usr.socket) usr.socket.emit("matching", usr.matching);
       })
     }
+    quiz.running = false;
   })
-}, 40000)
+}
 
 
 server.on('connection', (socket) => {
@@ -95,7 +110,9 @@ server.on('connection', (socket) => {
       users.splice(users.indexOf(user), 1);
       usr.socket = socket;
       user = usr;
-      callback({token: usr.token, username: usr.info.name});
+      let ret = {token: usr.token, username: usr.info.name};
+      if (usr.matching && quiz.startTime < Date.now()) ret.matching = usr.matching;
+      callback(ret);
     } else {
       callback({error: "Re-Login failed!"});
     }
