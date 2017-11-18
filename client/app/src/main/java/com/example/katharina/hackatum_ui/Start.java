@@ -6,14 +6,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.katharina.hackatum_ui.model.CountdownPacket;
+import com.example.katharina.hackatum_ui.model.QuestionPacket;
 import com.example.katharina.hackatum_ui.serverinterface.QuizClient;
+import com.example.katharina.hackatum_ui.serverinterface.Serializer;
 
 public class Start extends AppCompatActivity {
+    CountdownPacket countdown;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        if (getIntent()!=null && getIntent().getExtras()!=null) {
+            String jsonText = getIntent().getExtras().getString("JSON");
+            countdown = (CountdownPacket) Serializer.deserializePacket(jsonText, CountdownPacket.class);
+        }
+
+
         final int abTitleId = getResources().getIdentifier("action_bar_title", "id", "android");
 
         System.out.println("HelloWorld hackatum start");
