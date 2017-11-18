@@ -38,11 +38,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="start_begin"
+            android:text="The Quiz starts at"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textSize="18sp"
-            tools:text="The Quiz starts at" />
+            android:textSize="18sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -52,11 +51,10 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="start_time"
+            android:text="00:00"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-            android:textColor="@color/lightBlue"
-            tools:text="00:00" />
+            android:textColor="@color/lightBlue" />
 
         <Space
             android:layout_width="match_parent"
@@ -72,11 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="start_Table"
+                android:text="Table Nr.   "
                 android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textSize="18sp"
-                tools:text="Table Nr.   " />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tableNum"

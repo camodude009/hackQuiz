@@ -33,12 +33,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="bar_Bar"
+                android:text="Result"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textColor="@color/darkBlue"
-                tools:text="Result" />
+                android:textColor="@color/darkBlue" />
 
         </LinearLayout>
 
@@ -49,9 +48,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="result_header"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"
-            tools:text="Rounds" />
+            android:text="Rounds"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
         <Space
             android:layout_width="match_parent"
