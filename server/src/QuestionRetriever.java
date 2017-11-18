@@ -1,5 +1,6 @@
 import java.net.*;
 import java.io.*;
+import java.lang.*;
 
 public class QuestionRetriever {
 
@@ -57,6 +58,8 @@ public class QuestionRetriever {
     while ((inputLine = in.readLine()) != null)
         json += inputLine;
     in.close();
+
+    json = StringEscapeUtils.unesvapeHtml4(json);
 
     return (APIQuestionListPacket) gson.fromJson(json, APIQuestionListPacket);
   }
