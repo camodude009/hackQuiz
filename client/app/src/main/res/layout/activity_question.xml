@@ -17,8 +17,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,9 +37,9 @@
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:drawable="@drawable/martini"
                 android:background="@drawable/martini"
                 android:backgroundTint="@color/colorAccent"
+                android:drawable="@drawable/martini"
                 tools:text=" " />
 
         </LinearLayout>
@@ -73,16 +75,6 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="15dp" />
-
-        <ProgressBar
-            android:id="@+id/countdown_bar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="6.2"
-            android:foregroundTint="@color/lightBlue"
-            android:progressTint="@color/colorAccent"
-            android:visibility="visible" />
 
         <Space
             android:layout_width="match_parent"
@@ -153,13 +145,13 @@
         </LinearLayout>
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/countdown_bar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="6.2"
             android:foregroundTint="@color/lightBlue"
-            android:progressTint="@color/Blue_Medium"
+            android:progressTint="@color/colorAccent"
             android:visibility="visible" />
 
     </LinearLayout>
