@@ -21,6 +21,8 @@ public class Question extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+        String jsonText = getIntent().getExtras().getString("JSON");
+        System.out.println(jsonText);
     }
 
     private void init(int questionNum, int numQuestionsPerRound){//TODO Frage eingeben
