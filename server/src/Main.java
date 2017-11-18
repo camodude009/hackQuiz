@@ -11,7 +11,7 @@ public class Main {
     public final static List<Table> tables = new ArrayList<>();
 
 
-    public static final long registration_time = 1000 * 60 * 5;
+    public static final long registration_time = 1000 * 60;
     public static final long question_time = 1000 * 45;
 
     public static List<QuestionPacket> questions;
