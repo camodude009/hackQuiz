@@ -106,7 +106,7 @@ public class Table {
                 inner:
                 for (QuestionPacket q : Main.questions) {
                     if (q.num == a.id) {
-                        score++;
+                        if (q.correct == a.answer) score++;
                         break inner;
                     }
                 }

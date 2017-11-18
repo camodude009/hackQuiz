@@ -1,11 +1,5 @@
-
-import java.net.*;
-import java.io.*;
-import java.lang.*;
-
 import com.google.gson.Gson;
 import model.QuestionPacket;
-
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class QuestionRetriever {
 
@@ -47,7 +42,7 @@ public class QuestionRetriever {
                 json += inputLine;
             in.close();
 
-            json = StringEscapeUtils.unesvapeHtml4(json);
+            //json = StringEscapeUtils.unesvapeHtml4(json);
 
             return (APIQuestionListPacket) gson.fromJson(json, APIQuestionListPacket.class);
         } catch (IOException e) {

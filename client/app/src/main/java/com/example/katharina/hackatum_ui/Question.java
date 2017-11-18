@@ -87,10 +87,6 @@ public class Question extends AppCompatActivity {
             }
         });
 
-        ProgressBar pb = findViewById(R.id.progressBar);
-        pb.setMax(question.total-1);
-        pb.setProgress(question.num);
-
         ProgressBar countdownBar = findViewById(R.id.countdown_bar);
         long max = (question.ms);
         countdownBar.setMax(BAR_RESOLUTION);
@@ -123,6 +119,7 @@ public class Question extends AppCompatActivity {
 
             answer = findViewById(R.id.answer4);
             answer.setText(question.d);
+
         }
     }
 
