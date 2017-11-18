@@ -36,6 +36,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@android:drawable/btn_dialog"
+                android:backgroundTint="@color/colorAccent"
                 android:text="Button"
                 tools:text=" " />
         </LinearLayout>
