@@ -49,7 +49,7 @@ let app = new Vue({
           title: "color",
           status: 0,
           options: [
-            {title: "Select the Color of your Heart", val: -1},
+            {title: "Whats your Mood?", val: -1},
             {title: "Orange", val: 0},
             {title: "Red", val: 1},
             {title: "Pink", val: 2},

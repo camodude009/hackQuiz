@@ -3,6 +3,7 @@ var app = express();
 var io = require('socket.io');
 var bodyParser = require('body-parser');
 var http = require("http").Server(app);
+var fetch = require("node-fetch");
 
 app.use(express.static('public'));
 
@@ -97,7 +98,7 @@ function newQuiz(startTime) {
 }
 
 function sendMatchingToServer() {
-  fetch("131.159.211.197:8000/matching", {
+  fetch("http://131.159.211.197:8000/matching", {
     method: "POST",
     body: {matching: quiz.matching}
   })
