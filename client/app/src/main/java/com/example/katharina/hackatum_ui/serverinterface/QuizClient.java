@@ -28,7 +28,7 @@ import java.util.Queue;
 //FIXME http entities
 //FIXME Fix orientation changes (countdown table num)
 //TODO clear back stack
-
+//TODO
 //Feature
 public class QuizClient extends Service {
     static boolean initThreadRunning = false;

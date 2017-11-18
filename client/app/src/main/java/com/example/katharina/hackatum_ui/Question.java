@@ -40,6 +40,22 @@ public class Question extends AppCompatActivity {
     private void init(){
         setQuestion();
 
+        //INitalize color states
+        int[][] states = new int[][] {
+                new int[] { android.R.attr.state_enabled}, // enabled
+                new int[] {-android.R.attr.state_enabled}, // disabled
+                new int[] {-android.R.attr.state_checked}, // unchecked
+                new int[] { android.R.attr.state_pressed}  // pressed
+        };
+        int standartColor = getResources().getColor(R.color.Color_Quiz_Standard);
+        int[] standartColorList = new int[] {standartColor,standartColor,standartColor,standartColor};
+        final ColorStateList standartColorState = new ColorStateList(states, standartColorList);
+        int highlightColor = getResources().getColor(R.color.Color_Quiz_Highlight);
+        int[] highlightColorList = new int[] {highlightColor,highlightColor,highlightColor,highlightColor};
+        final ColorStateList highlightColorState = new ColorStateList(states, highlightColorList);
+
+
+
         Button fancy = findViewById(R.id.fancyButton);
         fancy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,15 +67,15 @@ public class Question extends AppCompatActivity {
         });
 
         //Relay answers
-        final int highlightColor = getResources().getColor(R.color.Color_Quiz_Highlight);
+
         final Button answerA1 = (Button)findViewById(R.id.answer1);
         answerA1.setOnClickListener(new Button.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 sendAnswer(0);
-                resetColors();
-                answerA1.setBackgroundColor(highlightColor);
+                resetColors(standartColorState);
+                answerA1.setBackgroundTintList(highlightColorState);
             }
         });
         final Button answerA2 = (Button)findViewById(R.id.answer2);
@@ -67,8 +83,8 @@ public class Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendAnswer(1);
-                resetColors();
-                answerA2.setBackgroundColor(highlightColor);
+                resetColors(standartColorState);
+                answerA2.setBackgroundTintList(highlightColorState);
             }
         });
         final Button answerA3 = (Button)findViewById(R.id.answer3);
@@ -76,8 +92,8 @@ public class Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendAnswer(2);
-                resetColors();
-                answerA3.setBackgroundColor(highlightColor);
+                resetColors(standartColorState);
+                answerA3.setBackgroundTintList(highlightColorState);
             }
         });
         final Button answerA4 = (Button)findViewById(R.id.answer4);
@@ -85,8 +101,8 @@ public class Question extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendAnswer(3);
-                resetColors();
-                answerA4.setBackgroundColor(highlightColor);
+                resetColors(standartColorState);
+                answerA4.setBackgroundTintList(highlightColorState);
             }
         });
 
@@ -126,19 +142,15 @@ public class Question extends AppCompatActivity {
         }
     }
 
-    private void resetColors() {
-        int standartColor = getResources().getColor(R.color.Color_Quiz_Standard);
-        Button answer = findViewById(R.id.answer1);
-        answer.setBackgroundColor(standartColor);
-
-        answer = findViewById(R.id.answer2);
-        answer.setBackgroundColor(standartColor);
-
-        answer = findViewById(R.id.answer3);
-        answer.setBackgroundColor(standartColor);
-
-        answer = findViewById(R.id.answer4);
-        answer.setBackgroundColor(standartColor);
+    private void resetColors(ColorStateList csl) {
+        Button answer1 = findViewById(R.id.answer1);
+        answer1.setBackgroundTintList(csl);
+        Button answer2 = findViewById(R.id.answer2);
+        answer2.setBackgroundTintList(csl);
+        Button answer3 = findViewById(R.id.answer3);
+        answer3.setBackgroundTintList(csl);
+        Button answer4 = findViewById(R.id.answer4);
+        answer4.setBackgroundTintList(csl);
     }
 
     public void sendAnswer(int answer){
