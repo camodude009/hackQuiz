@@ -76,6 +76,13 @@
             android:layout_width="match_parent"
             android:layout_height="15dp" />
 
+        <Button
+            android:id="@+id/highlight"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:backgroundTint="@color/highlight"
+            android:text="Button" />
+
         <ProgressBar
             android:id="@+id/countdown_bar"
             style="?android:attr/progressBarStyleHorizontal"
@@ -102,10 +109,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight=".5"
-                android:backgroundTint="@color/Blue_Medium"
+                android:backgroundTint="@color/Color_Quiz_Standard"
                 android:text="Answer1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@android:color/background_light"
+                android:textColorLink="@color/Color_Quiz_Standard"
                 android:textSize="18sp" />
 
             <Button

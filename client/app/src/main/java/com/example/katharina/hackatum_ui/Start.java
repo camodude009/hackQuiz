@@ -20,10 +20,15 @@ public class Start extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
         String jsonText = getIntent().getExtras().getString("JSON");
+
         countdown = (CountdownPacket) Serializer.deserializePacket(jsonText, CountdownPacket.class);
         new Timer(countdown.ms/1000).start(); //FIXME
 
+        TextView table = findViewById(R.id.tableNum);
+        int tableNum = ((CustomApplication)getApplication()).getTableNum();
+        table.setText(""+tableNum);
     }
 
 
