@@ -11,16 +11,20 @@ public class Main {
     public final static int port = 4444;
     public final static List<Table> tables = new ArrayList<>();
 
-    public final static List<QuestionPacket> questions = new ArrayList<>();
 
     public static final long registration_time = 1000 * 60 * 5;
     public static final long question_time = 1000 * 60;
 
+    public static List<QuestionPacket> questions;
     private static QuestionPacket currentQuestion;
 
     private static long start_time;
 
     public static void main(String[] args) {
+        Log.log("loading questions...");
+        QuestionRetriever retriever = new QuestionRetriever(100);
+        questions = retriever.getQuestionPackets(10);
+
         Log.log("starting server...");
 
         Registration registration = new Registration();
@@ -57,8 +61,6 @@ public class Main {
                 }
             }
         }
-
-
     }
 
     public static void sleep(long millis) {
