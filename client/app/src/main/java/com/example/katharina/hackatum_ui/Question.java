@@ -41,7 +41,7 @@ public class Question extends AppCompatActivity {
         fancy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent dialogIntent = new Intent(Question.this, Bar.class);
+                Intent dialogIntent = new Intent(Question.this, Color.class);
                 dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(dialogIntent);
             }

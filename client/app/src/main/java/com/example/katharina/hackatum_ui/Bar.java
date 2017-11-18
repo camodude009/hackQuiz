@@ -1,5 +1,6 @@
 package com.example.katharina.hackatum_ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -58,11 +59,19 @@ public class Bar extends AppCompatActivity {
             }
         });
 
-        Button colour = findViewById(R.id.colour);
-        colour.setOnClickListener(new View.OnClickListener() {
+        Button color = findViewById(R.id.colour);
+        color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO transition to activity_colour
+                Button fancy = findViewById(R.id.colour);
+                fancy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent dialogIntent = new Intent(Bar.this, Color.class);
+                        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(dialogIntent);
+                    }
+                });
             }
         });
 
@@ -70,7 +79,16 @@ public class Bar extends AppCompatActivity {
         music.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO transition to activity_music
+
+                Button fancy = findViewById(R.id.music);
+                fancy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent dialogIntent = new Intent(Bar.this, Music.class);
+                        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(dialogIntent);
+                    }
+                });
             }
         });
     }
