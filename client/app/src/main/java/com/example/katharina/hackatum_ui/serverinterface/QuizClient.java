@@ -24,12 +24,14 @@ import java.net.UnknownHostException;
 import java.util.Queue;
 
 public class QuizClient extends Service {
+    Thread readThread = null;
+    Thread writeThread = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        new ClientThread().start();
+        new InitThread().start();
     }
 
     @Override
@@ -43,120 +45,25 @@ public class QuizClient extends Service {
         return null;
     }
 
-    public class ClientThread extends Thread {
-        Context context;
-        Socket socket = null;
-        BufferedReader input = null;
-        PrintWriter output = null;
+
+    public class InitThread extends Thread {
+        boolean running = false;
 
         @Override
         public void run() {
-            Queue<Packet> toBeSendQueue = ((CustomApplication)getApplication()).getMessageQueue();
-
             super.run();
+            //Singleton
+            if (running==true) {return;}
+            else {running = true;}
 
-            init("131.159.211.197", 4444);
-            System.out.println("Connected");
-            boolean running = true;
-            while( running ) {
-
-                String line = null;
-                try {
-
-                    //Write to socket:
-                    if (!toBeSendQueue.isEmpty()) {
-                        Packet toBeSent = toBeSendQueue.remove();
-                        System.out.println("Found packet to be sent:"+ toBeSent);
-                        String json = Serializer.serializeObject(toBeSent);
-                        output.write(json+"\n");
-                        output.flush();
-                        System.out.println("Sent Json packet: "+json);
-                    }
-
-                    //Read from socket
-                    System.out.println("Reading buffer");
-                    line = input.readLine();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    init("131.159.211.197", 4444); //retry connection
-                }
-
-                //Receiving code
-                if( line!=null && !line.isEmpty()) {
-                    System.out.println("Packet received:"+line);
-                    switch( Serializer.getTokenFromPacket(line) ) {
-                        case CountdownPacket.token:
-                            Intent dialogIntent1 = new Intent(QuizClient.this, Start.class);
-                            dialogIntent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            dialogIntent1.putExtra("JSON", line);
-                            dialogIntent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(dialogIntent1);
-                            //TODO IMplement backstack cleaning
-                            break;
-
-                        case QuestionPacket.token:
-                            Intent dialogIntent2 = new Intent(QuizClient.this, Question.class);
-                            dialogIntent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            dialogIntent2.putExtra("JSON", line);
-                            dialogIntent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(dialogIntent2);
-                            //TODO IMplement backstack cleaning
-                            break;
-
-                        case SummaryPacket.token:
-                            Intent dialogIntent3 = new Intent(QuizClient.this, Result.class);
-                            dialogIntent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            dialogIntent3.putExtra("JSON", line);
-                            dialogIntent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(dialogIntent3);
-                            //TODO IMplement backstack cleaning
-                            break;
-
-                    }
-
-
-                }
-
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-
-
-//            //Example activity code
-//            Intent dialogIntent = new Intent(QuizClient.this, Question.class);
-//            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            dialogIntent.putExtra("JSON", "BlaBla");
-//            startActivity(dialogIntent);
-//
-//
-//            //TODO server interaction code
-//
-//
-//
-//            for(int i=0; i<1000; i++) {
-//                Log.i("HackQuiz", "HelloWorld");
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-
-
-
-        }
-
-        public void init(String ip, int port) { //TODO ip
+            //Wait for socket connection
+            Socket socket = null;
+            BufferedReader input = null;
+            PrintWriter output = null;
             while(true) {
                 // establish a connection
                 try {
-                    socket = new Socket(ip, port);
+                    socket = new Socket("131.159.211.197", 4444);
 
                     input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     // sends output to the socket
@@ -172,40 +79,152 @@ public class QuizClient extends Service {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+            System.out.println("Connected");
+
+
+            //=> Socket established, start read and write thread
+            writeThread = new WriteThread(socket, input, output);
+            readThread = new ReadThread(socket, input, output);
+            return; //Quit thread
+        }
+
+    }
+
+
+    public class WriteThread extends Thread {
+        Socket socket = null;
+        BufferedReader input = null;
+        PrintWriter output = null;
+
+        public WriteThread(Socket socket, BufferedReader input, PrintWriter output) {
+            this.socket = socket;
+            this.input = input;
+            this.output = output;
+        }
+
+
+        @Override
+        public void run() {
+            Queue<Packet> toBeSendQueue = ((CustomApplication) getApplication()).getMessageQueue();
+            super.run();
+
+            boolean running = true;
+            while (running) {
+
+                String line = null;
+                try {
+                    //Write to socket:
+                    if (!toBeSendQueue.isEmpty()) {
+                        Packet toBeSent = toBeSendQueue.remove();
+                        System.out.println("Found packet to be sent:" + toBeSent);
+                        String json = Serializer.serializeObject(toBeSent);
+                        output.write(json + "\n");
+                        output.flush();
+                        System.out.println("Sent Json packet: " + json);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    running = false;
+                }
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    running = false;
+                }
+            }
+
+            //TODO restart init
+            readThread.interrupt();
+            writeThread.interrupt();
+            new InitThread().start();
+
+        }
+    }
+
+        public class ReadThread extends Thread {
+            Context context;
+            Socket socket = null;
+            BufferedReader input = null;
+            PrintWriter output = null;
+
+            public ReadThread( Socket socket, BufferedReader input, PrintWriter output) {
+                this.socket = socket;
+                this.input = input;
+                this.output = output;
+            }
+
+            @Override
+            public void run() {
+                super.run();
+
+                boolean running = true;
+                while (running) {
+
+                    String line = null;
+                    try {
+                        //Read from socket
+                        System.out.println("Reading buffer");
+                        line = input.readLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        running = false;
+                    }
+
+                    //Receiving code -> transitions in the activities
+                    if (line != null && !line.isEmpty()) {
+                        System.out.println("Packet received:" + line);
+                        switch (Serializer.getTokenFromPacket(line)) {
+                            case CountdownPacket.token:
+                                Intent dialogIntent1 = new Intent(QuizClient.this, Start.class);
+                                dialogIntent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                dialogIntent1.putExtra("JSON", line);
+                                dialogIntent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(dialogIntent1);
+                                //TODO IMplement backstack cleaning
+                                break;
+
+                            case QuestionPacket.token:
+                                Intent dialogIntent2 = new Intent(QuizClient.this, Question.class);
+                                dialogIntent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                dialogIntent2.putExtra("JSON", line);
+                                dialogIntent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(dialogIntent2);
+                                //TODO IMplement backstack cleaning
+                                break;
+
+                            case SummaryPacket.token:
+                                Intent dialogIntent3 = new Intent(QuizClient.this, Result.class);
+                                dialogIntent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                dialogIntent3.putExtra("JSON", line);
+                                dialogIntent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(dialogIntent3);
+                                //TODO IMplement backstack cleaning
+                                break;
+
+                        }
+                    }
+
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        running = false;
+                    }
+
+                    //TODO restart init
+                    readThread.interrupt();
+                    writeThread.interrupt();
+                    new InitThread().start();
+                }
 
             }
         }
 
-//        public void sendString() {
-//
-//            // keep reading until "Over" is input
-//            //while (!line.equals("Over")) {
-//            //    try {
-//            outpu.write(toSend);
-//            //out.writeUTF(line);
-//            outPw.flush();
-//            System.out.printf("HW");
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            //        line = input.readLine();
-//            //    } catch (IOException i) {
-//            //        System.out.println(i);
-//            //    }
-//            //}
-//
-//            // close the connection
-//            try {
-//                input.close();
-//                out.close();
-//                socket.close();
-//            } catch (IOException i) {
-//                System.out.println(i);
-//            }
-//        }
-    }
+
 
 }
 
