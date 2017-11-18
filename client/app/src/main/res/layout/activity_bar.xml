@@ -59,7 +59,7 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="0"
-                android:text="Ask for Barkeeper"
+                android:text="Call a Waiter"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 android:textColorHighlight="@color/Cinnbar"
                 android:textSize="24sp"
