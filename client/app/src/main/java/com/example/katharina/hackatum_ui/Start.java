@@ -30,20 +30,19 @@ public class Start extends AppCompatActivity {
         }
 
 
-        if (false) {
             System.out.println("HelloWorld hackatum start");
             // use this to start and trigger a service
             Intent i = new Intent(this, QuizClient.class);
             // potentially add data to the intent
             //i.putExtra("KEY1", "Value to be used by the service");
             startService(i);
-        }
 
     }
 
-    public void setTime(String time) {
-        TextView txt = findViewById(R.id.textView6);
-        txt.setText(time);
+    public void setTime(CountdownPacket countdown) {
+        this.countdown = countdown;
+        TextView txt = findViewById(R.id.countdown);
+        txt.setText(countdown.getTime());
     }
 
     public void setTableNumber(int number) {
