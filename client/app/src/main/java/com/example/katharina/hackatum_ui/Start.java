@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.katharina.hackatum_ui.model.CountdownPacket;
 import com.example.katharina.hackatum_ui.model.QuestionPacket;
+import com.example.katharina.hackatum_ui.model.RegisterPacket;
 import com.example.katharina.hackatum_ui.serverinterface.QuizClient;
 import com.example.katharina.hackatum_ui.serverinterface.Serializer;
 
@@ -29,21 +30,21 @@ public class Start extends AppCompatActivity {
             textView.setText(countdown.getTime());
         }
 
+        RegisterPacket rp = new RegisterPacket(007, "Drop table");
+        ((CustomApplication)getApplication()).getMessageQeuue().add(rp);
 
-        if (false) {
-            System.out.println("HelloWorld hackatum start");
-            // use this to start and trigger a service
-            Intent i = new Intent(this, QuizClient.class);
-            // potentially add data to the intent
-            //i.putExtra("KEY1", "Value to be used by the service");
-            startService(i);
-        }
+        // use this to start and trigger a service
+        Intent i = new Intent(this, QuizClient.class);
+        // potentially add data to the intent
+        //i.putExtra("KEY1", "Value to be used by the service");
+        startService(i);
+
 
     }
 
     public void setTime(String time) {
-        TextView txt = findViewById(R.id.textView6);
-        txt.setText(time);
+        //TextView txt = findViewById(R.id.textView6);
+        //txt.setText(time);
     }
 
     public void setTableNumber(int number) {
