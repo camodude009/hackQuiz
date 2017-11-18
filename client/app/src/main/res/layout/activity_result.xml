@@ -89,13 +89,14 @@
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/place"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Your Team won the first place!"
+            android:text="Your Team won the 000 place!"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/Blue_Mediu"
             android:textSize="24sp"
-            android:visibility="invisible" />
+            android:visibility="visible" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

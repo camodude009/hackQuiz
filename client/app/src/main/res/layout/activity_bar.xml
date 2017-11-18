@@ -31,7 +31,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/back"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -46,6 +46,7 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/bartender"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -65,7 +66,7 @@
                 tools:text="Ask for Barkeeper" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/order"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -79,7 +80,7 @@
                 tools:text="Order a Drink" />
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/drink_recommend"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -98,7 +99,7 @@
                 tools:text="Drink Recommendation" />
 
             <Button
-                android:id="@+id/button7"
+                android:id="@+id/colour"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -112,7 +113,7 @@
                 tools:text="Colour" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/music"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
