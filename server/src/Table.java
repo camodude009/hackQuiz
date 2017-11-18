@@ -3,55 +3,70 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+import java.util.Queue;
 
-public class Table extends Thread{
+public class Table {
+
+    private Queue<Packet> packetQueue;
+
 
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    private boolean running;
+    private Thread messageReciever;
+    private Thread messageSender;
     private TableHandler tableHandler;
+
     private int number;
 
-    public Table(Socket socket, TableHandler tableHandler, int number) {
+
+    public Table(Socket socket) {
         this.socket = socket;
-        this.tableHandler = tableHandler;
-        this.number = number;
+
         try {
             out = new PrintWriter(socket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             Log.log(e.getMessage());
         }
-        running = true;
-        start();
+
+        messageReciever = new Thread(() -> {
+            while (true) {
+                String s = read();
+                if (s != null) tableHandler.handle(s);
+                else {
+                    Log.log(s);
+                }
+            }
+        });
+
+        messageSender = new Thread(() -> {
+            while (true) {
+                synchronized (packetQueue) {
+                    while (packetQueue.isEmpty()) {
+                        try {
+                            wait();
+                        } catch (InterruptedException e) {
+                            Log.log(e.getMessage());
+                        }
+                    }
+                    Packet p = packetQueue.poll();
+                    //TODO: send packet to client
+                }
+            }
+        });
+
     }
 
-    public boolean equals(Object o){
-         return o instanceof Table && ((Table)o).number == this.number;
+    public void addTableHandler(TableHandler tableHandler) {
+        this.tableHandler = tableHandler;
     }
 
-    public void run() {
-        while (running) {
-            String s = read();
-            if(s != null)tableHandler.handle(s);
-            else{Log.log(s);}
-        }
+    public boolean equals(Object o) {
+        return o instanceof Table && ((Table) o).number == this.number;
     }
 
-    public void terminate() {
-        running = false;
-        try {
-            socket.close();
-        } catch (IOException e) {
-            Log.log(e.getMessage());
-        }
-        try {
-            this.join();
-        } catch (InterruptedException e) {
-            Log.log(e.getMessage());
-        }
-    }
 
     public void write(String s) {
         out.write(s);
@@ -64,6 +79,10 @@ public class Table extends Thread{
             Log.log(e.getMessage());
         }
         return null;
+    }
+
+    public void setSocket(Socket client) {
+        this.socket = client;
     }
 
 }

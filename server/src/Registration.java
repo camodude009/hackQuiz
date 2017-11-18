@@ -1,5 +1,3 @@
-import Customers.Person;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,23 +22,38 @@ public class Registration extends Thread {
 
         while (true) {
             try {
+
                 Socket client = serverSocket.accept();
                 Log.log("connection recieved");
 
-                new Thread(() -> {
-                    try {
-                        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                        String register = in.readLine();
-                        Table t = null; //TODO: gson
-                        synchronized (Main.tables) {
-                            Main.tables.remove(t);
-                            Main.tables.add(t);
-                        }
-                        Log.log("registered" + t.toString());
-                    } catch (IOException e) {
-                        Log.log(e.getMessage());
+                Table t = new Table(client);
+
+                t.addTableHandler((String s)->{
+                    String token = s.substring(0, 2);
+                    String message = s.substring(3);
+
+                    switch (token){
+                        case "RGS":
+                            //TODO: RegisterPacket r gson
+                            t.setTableNum(r.tableNum);
+                            t.setName(r.name);
+
+                            break;
+                        case "SRQ":
+                            //TODO: forward request
+                            break;
+                        case "ANS":
+                            //TODO: write answer to teams answers
+                            break;
                     }
-                }).start();
+                });
+
+                synchronized (Main.tables) {
+                    Main.tables.remove(t);
+                    Main.tables.add(t);
+                }
+                Log.log("registered" + t.toString());
+
 
             } catch (IOException e) {
                 Log.log(e.getMessage());
