@@ -12,26 +12,32 @@ import com.example.katharina.hackatum_ui.serverinterface.QuizClient;
 import com.example.katharina.hackatum_ui.serverinterface.Serializer;
 
 public class Start extends AppCompatActivity {
-    CountdownPacket countdown;
+    private CountdownPacket countdown;
+    final int abTitleId = getResources().getIdentifier("action_bar_title", "id", "android");
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        if (getIntent()!=null && getIntent().getExtras()!=null) {
+        if (getIntent() != null && getIntent().getExtras() != null) {
             String jsonText = getIntent().getExtras().getString("JSON");
             countdown = (CountdownPacket) Serializer.deserializePacket(jsonText, CountdownPacket.class);
         }
+        if (countdown != null) {
+            TextView textView = findViewById(R.id.countdown);
+            textView.setText(countdown.getTime());
+        }
 
 
-        final int abTitleId = getResources().getIdentifier("action_bar_title", "id", "android");
-
-        System.out.println("HelloWorld hackatum start");
-        // use this to start and trigger a service
-        Intent i= new Intent(this, QuizClient.class);
-        // potentially add data to the intent
-        //i.putExtra("KEY1", "Value to be used by the service");
-        startService(i);
+        if (false) {
+            System.out.println("HelloWorld hackatum start");
+            // use this to start and trigger a service
+            Intent i = new Intent(this, QuizClient.class);
+            // potentially add data to the intent
+            //i.putExtra("KEY1", "Value to be used by the service");
+            startService(i);
+        }
 
     }
 
