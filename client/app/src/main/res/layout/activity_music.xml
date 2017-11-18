@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.katharina.hackatum_ui.Start">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/LightOrange"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="?attr/homeAsUpIndicator"
+                android:backgroundTint="@color/colorAccent"
+                tools:text=" " />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/bartender"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@android:color/transparent"
+                    android:baselineAligned="false"
+                    android:lineSpacingExtra="10sp"
+                    android:shadowColor="@color/darkBlue"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColorHighlight="@color/Cinnbar"
+                    android:textSize="24sp"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/red"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@color/Cinnbar"
+                    android:baselineAligned="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textSize="24sp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/drink_recommend"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:backgroundTint="@color/lightBlue"
+                    android:baselineAligned="false"
+                    android:shadowColor="@color/darkBlue"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColorHighlight="@color/Cinnbar"
+                    android:textSize="24sp"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/orange"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@android:color/holo_orange_light"
+                    android:baselineAligned="false"
+                    android:shadowColor="@color/darkBlue"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColorHighlight="@color/Cinnbar"
+                    android:textSize="24sp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/drink_recommend2"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:backgroundTint="@color/lightBlue"
+                    android:baselineAligned="false"
+                    android:shadowColor="@color/darkBlue"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColorHighlight="@color/Cinnbar"
+                    android:textSize="24sp"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6.5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/green"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@android:color/holo_green_light"
+                    android:baselineAligned="false"
+                    android:lineSpacingExtra="10sp"
+                    android:shadowColor="@color/darkBlue"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColorHighlight="@color/Cinnbar"
+                    android:textSize="24sp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6.5"
+                    android:text="Button"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/music"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@drawable/music_circle"
+                    android:baselineAligned="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textSize="24sp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6.5"
+                    android:text="Button"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/purple"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@android:color/holo_purple"
+                    android:baselineAligned="false"
+                    android:shadowColor="@color/darkBlue"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColorHighlight="@color/Cinnbar"
+                    android:textSize="24sp"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6.5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/bartender"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:backgroundTint="@color/lightBlue"
+                    android:baselineAligned="false"
+                    android:lineSpacingExtra="10sp"
+                    android:shadowColor="@color/darkBlue"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColorHighlight="@color/Cinnbar"
+                    android:textSize="24sp"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/yellow"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:backgroundTint="@color/lightBlue"
+                    android:background = "@drawable/rounded_button"
+                    android:baselineAligned="false"
+                    android:lineSpacingExtra="10sp"
+                    android:shadowColor="@color/darkBlue"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColorHighlight="@color/Cinnbar"
+                    android:textSize="24sp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/bartender2"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:backgroundTint="@color/lightBlue"
+                    android:baselineAligned="false"
+                    android:lineSpacingExtra="10sp"
+                    android:shadowColor="@color/darkBlue"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColorHighlight="@color/Cinnbar"
+                    android:textSize="24sp"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/blue"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:backgroundTint="@android:color/holo_blue_dark"
+                    android:background = "@drawable/rounded_button"
+                    android:baselineAligned="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textSize="24sp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/drink_recommend"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:backgroundTint="@color/lightBlue"
+                    android:baselineAligned="false"
+                    android:shadowColor="@color/darkBlue"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColorHighlight="@color/Cinnbar"
+                    android:textSize="24sp"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

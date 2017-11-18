@@ -89,11 +89,20 @@ function newQuiz(startTime) {
         usr.matching = {table: quiz.matching.find(m => m.users.find(u => u == usr.info.name)).table};
         if (usr.socket) usr.socket.emit("matching", usr.matching);
       })
+
+      sendMatchingToServer();
     }
     quiz.running = false;
   })
 }
 
+function sendMatchingToServer() {
+  fetch("131.159.211.197:8000/matching", {
+    method: "POST",
+    body: {matching: quiz.matching}
+  })
+  .catch(console.error);
+}
 
 server.on('connection', (socket) => {
   let user = {
