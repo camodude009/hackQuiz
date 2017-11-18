@@ -9,10 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.katharina.hackatum_ui.model.QuestionPacket;
 import com.example.katharina.hackatum_ui.model.RegisterPacket;
 import com.example.katharina.hackatum_ui.serverinterface.QuizClient;
-import com.example.katharina.hackatum_ui.serverinterface.Serializer;
 
 /**
  * Created by Katharina on 18/11/2017.
@@ -46,7 +44,7 @@ public class Enter extends AppCompatActivity {
                     //=> Invoking the send registration message on our lient
                     int tableNr = Integer.parseInt( tableNrEdt.getText().toString() );
                     RegisterPacket rp = new RegisterPacket( tableNr, nameString );
-                    ((CustomApplication)getApplication()).getMessageQeuue().add(rp);
+                    ((CustomApplication)getApplication()).getMessageQueue().add(rp);
                     ((CustomApplication)getApplication()).setTableNum(tableNr);
                 } catch(Exception e) { //TODO specify exception
                     Toast.makeText(Enter.this, "Please enter a number", Toast.LENGTH_SHORT).show();

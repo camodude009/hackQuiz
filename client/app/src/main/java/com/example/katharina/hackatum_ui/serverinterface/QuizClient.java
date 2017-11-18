@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.example.katharina.hackatum_ui.CustomApplication;
 import com.example.katharina.hackatum_ui.Question;
@@ -16,7 +15,6 @@ import com.example.katharina.hackatum_ui.model.QuestionPacket;
 import com.example.katharina.hackatum_ui.model.SummaryPacket;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -53,7 +51,7 @@ public class QuizClient extends Service {
 
         @Override
         public void run() {
-            Queue<Packet> toBeSendQueue = ((CustomApplication)getApplication()).getMessageQeuue();
+            Queue<Packet> toBeSendQueue = ((CustomApplication)getApplication()).getMessageQueue();
 
             super.run();
 

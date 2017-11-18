@@ -21,7 +21,7 @@ public class CustomApplication extends android.app.Application {
     }
 
     private Queue<Packet> messageQeuue = new ConcurrentLinkedQueue<>();
-    public Queue<Packet> getMessageQeuue() {
+    public Queue<Packet> getMessageQueue() {
         return messageQeuue;
     }
 

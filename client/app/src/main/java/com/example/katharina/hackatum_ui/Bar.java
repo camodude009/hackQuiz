@@ -1,6 +1,5 @@
 package com.example.katharina.hackatum_ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -37,7 +36,7 @@ public class Bar extends AppCompatActivity {
         bartender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             ca.getMessageQeuue().add(new ServiceRequestPacket(ServiceRequestPacket.CALL_BARKEEPER));
+             ca.getMessageQueue().add(new ServiceRequestPacket(ServiceRequestPacket.CALL_BARKEEPER));
                 Toast.makeText(Bar.this, "The bartender will be with you shortly", Toast.LENGTH_SHORT).show();
             }
         });
@@ -46,7 +45,7 @@ public class Bar extends AppCompatActivity {
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ca.getMessageQeuue().add(new ServiceRequestPacket(ServiceRequestPacket.CALL_ORDER_DRINK));
+                ca.getMessageQueue().add(new ServiceRequestPacket(ServiceRequestPacket.CALL_ORDER_DRINK));
                 Toast.makeText(Bar.this, "The waiter will be with you shortly", Toast.LENGTH_SHORT).show();
             }
         });

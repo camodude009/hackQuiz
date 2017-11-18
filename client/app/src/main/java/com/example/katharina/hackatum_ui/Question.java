@@ -114,7 +114,7 @@ public class Question extends AppCompatActivity {
         if (answered==false) {
             CustomApplication ca = (CustomApplication)getApplication();
             AnswerPacket ap = new AnswerPacket(answer, question.num, ca.getTableNum());
-            ca.getMessageQeuue().add(ap); //Send answer message
+            ca.getMessageQueue().add(ap); //Send answer message
             answered = true;
         }
     }
