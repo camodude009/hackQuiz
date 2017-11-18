@@ -48,12 +48,13 @@
             android:textSize="18sp" />
 
         <EditText
+            android:id="@+id/edit_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="5.1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Team Name"
+            android:text="Team name"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
             android:textSize="24sp" />
@@ -74,7 +75,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/edit_table"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="5.1"
@@ -91,10 +92,11 @@
             android:layout_weight="5.2" />
 
         <Button
+            android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/Blue_Mediu"
-            android:text="Abschicken"
+            android:text="Submit"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <Space

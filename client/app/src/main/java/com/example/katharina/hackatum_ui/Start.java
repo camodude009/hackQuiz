@@ -20,32 +20,16 @@ public class Start extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        if (getIntent() != null && getIntent().getExtras() != null) {
-            String jsonText = getIntent().getExtras().getString("JSON");
-            countdown = (CountdownPacket) Serializer.deserializePacket(jsonText, CountdownPacket.class);
-        }
-        if (countdown != null) {
-            //TextView textView = findViewById(R.id.countdown);
-            //textView.setText(countdown.getTime());
-        }
-
-        //RegisterPacket rp = new RegisterPacket(007, "Drop table");
-        //((CustomApplication)getApplication()).getMessageQeuue().add(rp);
-
-        // use this to start and trigger a service
-        //Intent i = new Intent(this, QuizClient.class);
-        // potentially add data to the intent
-        //i.putExtra("KEY1", "Value to be used by the service");
-       // startService(i);
-
-        new Timer(65).start();
+        String jsonText = getIntent().getExtras().getString("JSON");
+        countdown = (CountdownPacket) Serializer.deserializePacket(jsonText, CountdownPacket.class);
+        new Timer(countdown.ms/1000).start(); //FIXME
 
     }
 
 
-    public void setCountdownTextUI(int left) {
-        int minutes = left/60;
-        int seconds = left%60;
+    public void setCountdownTextUI(long left) {
+        long minutes = left/60;
+        long seconds = left%60;
         String formatted = String.format("%02d", minutes)+":"+String.format("%02d", seconds);
         TextView txt = (TextView)findViewById(R.id.countdownBeforeQuiz);
         txt.setText(formatted);
@@ -53,9 +37,9 @@ public class Start extends AppCompatActivity {
 
     //Quick and dirty TODO clean
     private  class Timer extends Thread {
-        int countdown = 10;
+        long countdown = 440;
 
-        public Timer(int countdown) {
+        public Timer(long countdown) {
             this.countdown = countdown;
         }
 

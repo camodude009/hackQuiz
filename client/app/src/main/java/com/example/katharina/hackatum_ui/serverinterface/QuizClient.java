@@ -64,19 +64,20 @@ public class QuizClient extends Service {
 
                 String line = null;
                 try {
-                    //Read from socket
-                    System.out.println("Reading buffer");
-                    line = input.readLine();
 
                     //Write to socket:
                     if (!toBeSendQueue.isEmpty()) {
-                        Packet toBeSent = toBeSendQueue.poll();
+                        Packet toBeSent = toBeSendQueue.remove();
                         System.out.println("Found packet to be sent:"+ toBeSent);
                         String json = Serializer.serializeObject(toBeSent);
                         output.write(json+"\n");
                         output.flush();
                         System.out.println("Sent Json packet: "+json);
                     }
+
+                    //Read from socket
+                    System.out.println("Reading buffer");
+                    line = input.readLine();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -91,6 +92,7 @@ public class QuizClient extends Service {
                             Intent dialogIntent1 = new Intent(QuizClient.this, Start.class);
                             dialogIntent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             dialogIntent1.putExtra("JSON", line);
+                            dialogIntent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(dialogIntent1);
                             //TODO IMplement backstack cleaning
                             break;
@@ -99,6 +101,7 @@ public class QuizClient extends Service {
                             Intent dialogIntent2 = new Intent(QuizClient.this, Question.class);
                             dialogIntent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             dialogIntent2.putExtra("JSON", line);
+                            dialogIntent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(dialogIntent2);
                             //TODO IMplement backstack cleaning
                             break;
@@ -107,6 +110,7 @@ public class QuizClient extends Service {
                             Intent dialogIntent3 = new Intent(QuizClient.this, Result.class);
                             dialogIntent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             dialogIntent3.putExtra("JSON", line);
+                            dialogIntent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(dialogIntent3);
                             //TODO IMplement backstack cleaning
                             break;
