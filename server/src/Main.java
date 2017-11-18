@@ -12,7 +12,7 @@ public class Main {
 
 
     public static final long registration_time = 1000 * 60;
-    public static final long question_time = 1000 * 45;
+    public static final long question_time = 1000 * 30;
 
     public static List<QuestionPacket> questions;
     private static QuestionPacket currentQuestion;
@@ -21,7 +21,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        /*
         QuizHttpServer httpServer = new QuizHttpServer(8000);
 
         httpServer.onMatching(matching -> {
@@ -29,7 +28,6 @@ public class Main {
             Log.log(matching.toString());
             // play();
         });
-        */
 
         play();
 
@@ -39,7 +37,7 @@ public class Main {
         Log.log("loading questions...");
 
 
-        QuestionRetriever retriever = new QuestionRetriever(100);
+        QuestionRetriever retriever = new QuestionRetriever(100, true);
         questions = retriever.getQuestionPackets(3, question_time);
 
         Log.log("starting server...");

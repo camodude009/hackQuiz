@@ -2,7 +2,9 @@ package com.example.katharina.hackatum_ui;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -69,6 +71,7 @@ public class Question extends AppCompatActivity {
 
         final Button answerA1 = (Button)findViewById(R.id.answer1);
         answerA1.setOnClickListener(new Button.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 sendAnswer(0);
