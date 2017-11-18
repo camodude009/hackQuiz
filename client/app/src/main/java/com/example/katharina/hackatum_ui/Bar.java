@@ -31,7 +31,7 @@ public class Bar extends AppCompatActivity {
         bartender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO transition to activity_ask_bartender
+                //TODO send message to server (bartender)
             }
         });
 

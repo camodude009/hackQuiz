@@ -25,19 +25,20 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
             <Button
                 android:id="@+id/back"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@android:drawable/btn_dialog"
+                android:background="?attr/homeAsUpIndicator"
                 android:backgroundTint="@color/colorAccent"
                 tools:text=" " />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -55,9 +56,9 @@
                 android:baselineAligned="false"
                 android:lineSpacingExtra="10sp"
                 android:shadowColor="@color/darkBlue"
-                android:shadowDx="5"
-                android:shadowDy="5"
-                android:shadowRadius="10"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="0"
                 android:text="Ask for Barkeeper"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 android:textColorHighlight="@color/Cinnbar"
@@ -86,9 +87,9 @@
                 android:backgroundTint="@color/lightBlue"
                 android:baselineAligned="false"
                 android:shadowColor="@color/darkBlue"
-                android:shadowDx="5"
-                android:shadowDy="5"
-                android:shadowRadius="10"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="0"
                 android:text="Drink Recommendation"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 android:textColorHighlight="@color/Cinnbar"
