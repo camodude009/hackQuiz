@@ -22,7 +22,7 @@ public class Registration extends Thread {
             while (true) {
 
                 Socket client = serverSocket.accept();
-                Log.log("connection recieved");
+                Log.log("connection recieved (" + client.getRemoteSocketAddress().toString() + ")");
 
                 Table t = new Table(client);
                 String message = t.read();

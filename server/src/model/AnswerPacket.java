@@ -17,4 +17,13 @@ public class AnswerPacket extends Packet {
         return o instanceof AnswerPacket && ((AnswerPacket) o).id == this.id
                 || o instanceof Integer && (int) o == this.id;
     }
+
+    @Override
+    public String toString() {
+        return "AnswerPacket{" +
+                "table=" + table +
+                ", answer=" + answer +
+                ", id=" + id +
+                '}';
+    }
 }

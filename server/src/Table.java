@@ -1,5 +1,6 @@
 import model.AnswerPacket;
 import model.Packet;
+import model.QuestionPacket;
 import model.ServiceRequestPacket;
 
 import java.io.BufferedReader;
@@ -40,7 +41,7 @@ public class Table {
                 int numIllegitimateCalls = 0;
                 String message = read();
                 if (message != null) {
-                    Log.log("received packet (" + table + "):" + message);
+                    //Log.log("received packet (" + table + "):" + message);
                     handle(message);
                 } else {
                     numIllegitimateCalls++;
@@ -65,12 +66,11 @@ public class Table {
                         Packet p = packetQueue.poll();
                         String message = Serializer.serializeObject(p);
                         write(message);
-                        Log.log("sent packet (" + table + "): " + message);
+                        //Log.log("sent packet (" + table + "): " + message);
                     }
                 }
             }
         });
-
     }
 
     public void handle(String message) {
@@ -79,14 +79,16 @@ public class Table {
         switch (token) {
             case ServiceRequestPacket.token:
                 ServiceRequestPacket service_request = (ServiceRequestPacket) Serializer.deserializePacket(message, ServiceRequestPacket.class);
-                System.out.println("Request recieved from " + this.getNumber() + ": " + service_request);
+                System.out.println("service request received from " + table + ": " + service_request);
                 //TODO: further forwarding (LED, etc.)
                 break;
 
             case AnswerPacket.token:
                 AnswerPacket answer_request = (AnswerPacket) Serializer.deserializePacket(message, AnswerPacket.class);
                 synchronized (answers) {
-                    answers.remove(answer_request);
+                    if (answers.remove(answer_request))
+                        Log.log("answer changed (" + table + ")");
+                    else Log.log("answer collected (" + table + ")");
                     answers.add(answer_request);
                 }
                 calcScore();
@@ -99,18 +101,22 @@ public class Table {
         score = 0;
         synchronized (answers) {
             for (AnswerPacket a : answers) {
-                if (Main.questions.get(Main.questions.indexOf(a.id)).correct == a.answer) score++;
+                inner:
+                for (QuestionPacket q : Main.questions) {
+                    if (q.num == a.id) {
+                        score++;
+                        break inner;
+                    }
+                }
             }
         }
     }
 
-    public int getNumber() {
-        return table;
-    }
-
     public String read() {
         try {
-            return in.readLine();
+            String s = in.readLine();
+            //Log.log("received packet (" + table + "):" + s);
+            return s;
         } catch (IOException e) {
             this.terminate();
             Log.log(e.getMessage());
@@ -120,6 +126,7 @@ public class Table {
 
     public void write(String s) {
         out.write(s + "\n");
+        //Log.log("sent packet (" + table + "): " + s);
         out.flush();
     }
 
@@ -158,6 +165,10 @@ public class Table {
         Log.log("table " + table + " has terminated");
     }
 
+    public int getNumber() {
+        return table;
+    }
+
     public List<AnswerPacket> getAnswers() {
         return answers;
     }
@@ -174,6 +185,15 @@ public class Table {
 
     public boolean equals(Object o) {
         return o instanceof Table && ((Table) o).table == this.table || o instanceof Integer && (int) o == this.table;
+    }
+
+    @Override
+    public String toString() {
+        return "Table{" +
+                "table=" + table +
+                ", name='" + name + '\'' +
+                ", score=" + score +
+                '}';
     }
 
     public void setTableNum(int tableNum) {
