@@ -11,21 +11,24 @@ public class Registration extends Thread {
 
     public void run() {
         Log.log("creating packet handler...");
-        TableHandler tableHandler = (String message)-> {
+        TableHandler tableHandler = (String message, Table t)-> {
             String token = message.substring(0, 3);
 
+
+
             switch (token) {
-                case "RGS":
+                case RegisterPacket.token:
                     RegisterPacket register = (RegisterPacket) Serializer.deserializePacket(message, RegisterPacket.class);
                     t.setTableNum(register.table);
                     t.setName(register.name);
-
                     break;
+
                 case ServiceRequestPacket.token:
                     ServiceRequestPacket service_request = (ServiceRequestPacket) Serializer.deserializePacket(message, ServiceRequestPacket.class);
-                    System.out.println("Request recieved from " + t.getNumber() + ": " + request);
+                    System.out.println("Request recieved from " + t.getNumber() + ": " + service_request);
                     //TODO: further forwarding (LED, etc.)
                     break;
+
                 case "ANS":
                     //TODO: write answer to teams answers
                     break;

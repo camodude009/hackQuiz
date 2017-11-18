@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.List;
 import java.util.Queue;
 
 public class Table {
@@ -16,11 +15,12 @@ public class Table {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    private Thread messageReciever;
+    private Thread messageReceiver;
     private Thread messageSender;
     private TableHandler tableHandler;
 
-    private int number;
+    private int table;
+    private String name;
     private boolean running;
 
 
@@ -35,11 +35,11 @@ public class Table {
             Log.log(e.getMessage());
         }
 
-        messageReciever = new Thread(() -> {
+        messageReceiver = new Thread(() -> {
             while (running) {
                 try {
                     String s = in.readLine();
-                    tableHandler.handle(s);
+                    tableHandler.handle(s, this);
                 } catch (IOException e) {
                     Log.log(e.getMessage());
                 }
@@ -64,7 +64,7 @@ public class Table {
         });
 
         running = true;
-        messageReciever.start();
+        messageReceiver.start();
         messageSender.start();
 
     }
@@ -73,7 +73,7 @@ public class Table {
         running = false;
         try {
             socket.close();
-            messageReciever.join();
+            messageReceiver.join();
             messageSender.join();
         } catch (IOException e) {
             Log.log(e.getMessage());
@@ -83,7 +83,7 @@ public class Table {
     }
 
     public boolean equals(Object o) {
-        return o instanceof Table && ((Table) o).number == this.number;
+        return o instanceof Table && ((Table) o).table == this.table;
     }
 
     public void setSocket(Socket client) {
@@ -97,6 +97,14 @@ public class Table {
     }
 
     public int getNumber() {
-        return number;
+        return table;
+    }
+
+    public void setTableNum(int tableNum) {
+        this.table = table;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
