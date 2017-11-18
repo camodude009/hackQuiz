@@ -14,7 +14,6 @@ import com.example.katharina.hackatum_ui.serverinterface.Serializer;
 
 public class Start extends AppCompatActivity {
     private CountdownPacket countdown;
-    final int abTitleId = getResources().getIdentifier("action_bar_title", "id", "android");
 
 
     @Override
@@ -30,8 +29,6 @@ public class Start extends AppCompatActivity {
             textView.setText(countdown.getTime());
         }
 
-        RegisterPacket rp = new RegisterPacket(007, "Drop table");
-        ((CustomApplication)getApplication()).getMessageQeuue().add(rp);
 
         // use this to start and trigger a service
         Intent i = new Intent(this, QuizClient.class);
@@ -39,18 +36,17 @@ public class Start extends AppCompatActivity {
         //i.putExtra("KEY1", "Value to be used by the service");
         startService(i);
 
-
-    }
-
-    public void setTime(String time) {
-        //TextView txt = findViewById(R.id.textView6);
-        //txt.setText(time);
     }
 
     public void setTableNumber(int number) {
         TextView txt = findViewById(R.id.tableNum);
-        txt.setText(number);
+
     }
 
-
+    public void setTime(CountdownPacket countdown) {
+        this.countdown = countdown;
+        TextView txt = findViewById(R.id.countdown);
+        txt.setText(countdown.getTime());
+    }
 }
+

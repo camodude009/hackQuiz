@@ -15,8 +15,7 @@ import com.example.katharina.hackatum_ui.serverinterface.Serializer;
  */
 
 public class Question extends AppCompatActivity {
-    private int questionNum;
-    private int numQuestionsPerRound;
+
     private int answer;
 
     QuestionPacket question;
@@ -27,11 +26,14 @@ public class Question extends AppCompatActivity {
         setContentView(R.layout.activity_question);
         String jsonText = getIntent().getExtras().getString("JSON");
         question = (QuestionPacket)Serializer.deserializePacket(jsonText, QuestionPacket.class);
+        if(question!=null) init();
 
         System.out.println(jsonText);
     }
 
-    private void init(int questionNum, int numQuestionsPerRound){//TODO Frage eingeben
+    private void init(){
+        setQuestion();
+
         Button fancy = findViewById(R.id.fancyButton);
         fancy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,11 +41,6 @@ public class Question extends AppCompatActivity {
                 //TODO Transition to activity_bar
             }
         });
-
-        TextView qNum = findViewById(R.id.questionNum);
-        qNum.setText("Question "+questionNum+"/"+numQuestionsPerRound);
-
-        setQuestion();
 
         ProgressBar pb = findViewById(R.id.progressBar);
         pb.setMax(10);
@@ -56,8 +53,26 @@ public class Question extends AppCompatActivity {
         setQuestion();
     }
 
-    private void setQuestion(){ //TODO requires Question
-        //TODO setQuestion
+    private void setQuestion(){
+        if(question != null){
+            TextView qNum = findViewById(R.id.questionNum);
+            qNum.setText("Question "+question.num+"/"+question.total);
+
+            TextView textView = findViewById(R.id.question);
+            textView.setText(question.question);
+
+            Button answer = findViewById(R.id.answer1);
+            answer.setText(question.a);
+
+            answer = findViewById(R.id.answer2);
+            answer.setText(question.b);
+
+            answer = findViewById(R.id.answer3);
+            answer.setText(question.c);
+
+            answer = findViewById(R.id.answer4);
+            answer.setText(question.d);
+        }
     }
 
     public int getAnswer(){
