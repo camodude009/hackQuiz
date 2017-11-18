@@ -20,6 +20,7 @@ public class Question extends AppCompatActivity {
 
     private int answer;
     private boolean answered = false;
+    private static final int BAR_RESOLUTION = 5000;
 
     QuestionPacket question;
 
@@ -48,32 +49,41 @@ public class Question extends AppCompatActivity {
         });
 
         //Relay answers
-        Button answerA1 = (Button)findViewById(R.id.answer1);
+        final int highlightColor = getResources().getColor(R.color.Color_Quiz_Highlight);
+        final Button answerA1 = (Button)findViewById(R.id.answer1);
         answerA1.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendAnswer(0);
+                resetColors();
+                answerA1.setBackgroundColor(highlightColor);
             }
         });
-        Button answerA2 = (Button)findViewById(R.id.answer2);
+        final Button answerA2 = (Button)findViewById(R.id.answer2);
         answerA2.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendAnswer(1);
+                resetColors();
+                answerA2.setBackgroundColor(highlightColor);
             }
         });
-        Button answerA3 = (Button)findViewById(R.id.answer3);
+        final Button answerA3 = (Button)findViewById(R.id.answer3);
         answerA3.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendAnswer(2);
+                resetColors();
+                answerA3.setBackgroundColor(highlightColor);
             }
         });
-        Button answerA4 = (Button)findViewById(R.id.answer4);
+        final Button answerA4 = (Button)findViewById(R.id.answer4);
         answerA4.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendAnswer(3);
+                resetColors();
+                answerA4.setBackgroundColor(highlightColor);
             }
         });
 
@@ -82,9 +92,9 @@ public class Question extends AppCompatActivity {
         pb.setProgress(question.num);
 
         ProgressBar countdownBar = findViewById(R.id.countdown_bar);
-        int max = (int)(question.ms/1000);
-        countdownBar.setMax(max);
-        countdownBar.setProgress(max);
+        long max = (question.ms);
+        countdownBar.setMax(BAR_RESOLUTION);
+        countdownBar.setProgress(BAR_RESOLUTION);
         new Timer(max).start();
     }
 
@@ -116,17 +126,31 @@ public class Question extends AppCompatActivity {
         }
     }
 
+    private void resetColors() {
+        int standartColor = getResources().getColor(R.color.Color_Quiz_Standard);
+        Button answer = findViewById(R.id.answer1);
+        answer.setBackgroundColor(standartColor);
+
+        answer = findViewById(R.id.answer2);
+        answer.setBackgroundColor(standartColor);
+
+        answer = findViewById(R.id.answer3);
+        answer.setBackgroundColor(standartColor);
+
+        answer = findViewById(R.id.answer4);
+        answer.setBackgroundColor(standartColor);
+    }
+
     public void sendAnswer(int answer){
-        //if (answered==false) {
             CustomApplication ca = (CustomApplication)getApplication();
             AnswerPacket ap = new AnswerPacket(ca.getTableNum(), answer, question.num );
             ca.getMessageQueue().add(ap); //Send answer message
-        //}
     }
 
-    public void setCountdownTimer(long progress) {
+    public void setCountdownTimer(long millisleft) {
         ProgressBar countdownBar = findViewById(R.id.countdown_bar);
-        countdownBar.setProgress((int)progress);
+        int ratio = (int) ((double)millisleft/(double)question.ms*BAR_RESOLUTION);
+        countdownBar.setProgress(ratio);
     }
 
     //Quick and dirty TODO clean
@@ -140,7 +164,7 @@ public class Question extends AppCompatActivity {
         @Override
         public void run() {
             while( countdown>0 ) {
-                countdown--;
+                countdown=countdown-10;
                 //System.out.println(countdown);
                 runOnUiThread(new Runnable() {
                     @Override
@@ -149,7 +173,7 @@ public class Question extends AppCompatActivity {
                     }
                 });
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

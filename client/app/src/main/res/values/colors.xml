@@ -16,4 +16,6 @@
     <color name="torkoise">#70dad1</color>
     <color name="Blue_Mediu">#6fbfd8</color>
     <color name="Blue_Medium">#128bb0</color>
+    <color name="Color_Quiz_Standard">#128bb0</color>
+    <color name="Color_Quiz_Highlight">#760ecc</color>
 </resources>
