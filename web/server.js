@@ -43,8 +43,10 @@ let users = [{info: {
 
 let quiz = {
   running: false,
-  startTime: Date.now()+50000
+  startTime: null
 }
+
+newQuiz( Date.now()+50000);
 
 //configure next quiz
 app.post("/config/quiz", (req, res) => {
