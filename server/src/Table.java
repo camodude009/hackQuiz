@@ -6,11 +6,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Table {
 
-    private Queue<Packet> packetQueue;
-
+    public Queue<Packet> packetQueue;
 
     private Socket socket;
     private PrintWriter out;
@@ -25,6 +25,7 @@ public class Table {
 
 
     public Table(Socket client, TableHandler tableHandler) {
+        packetQueue = new ConcurrentLinkedQueue<>();
         this.tableHandler = tableHandler;
         setSocket(client);
 
@@ -69,7 +70,7 @@ public class Table {
 
     }
 
-    public void terminate(){
+    public void terminate() {
         running = false;
         try {
             socket.close();
@@ -87,6 +88,11 @@ public class Table {
     }
 
     public void setSocket(Socket client) {
+        if (this.socket != null) try {
+            socket.close();
+        } catch (IOException e) {
+            Log.log(e.getMessage());
+        }
         this.socket = client;
         try {
             out = new PrintWriter(socket.getOutputStream());

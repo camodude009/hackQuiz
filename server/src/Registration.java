@@ -1,3 +1,4 @@
+import model.AnswerPacket;
 import model.RegisterPacket;
 import model.ServiceRequestPacket;
 
@@ -11,9 +12,8 @@ public class Registration extends Thread {
 
     public void run() {
         Log.log("creating packet handler...");
-        TableHandler tableHandler = (String message, Table t)-> {
+        TableHandler tableHandler = (String message, Table t) -> {
             String token = message.substring(0, 3);
-
 
 
             switch (token) {
@@ -29,8 +29,8 @@ public class Registration extends Thread {
                     //TODO: further forwarding (LED, etc.)
                     break;
 
-                case "ANS":
-                    //TODO: write answer to teams answers
+                case AnswerPacket.token:
+                    //TODO: set answer
                     break;
             }
         };
@@ -57,11 +57,14 @@ public class Registration extends Thread {
                 Table t = new Table(client, tableHandler);
 
                 synchronized (Main.tables) {
-                    Main.tables.remove(t);
-                    Main.tables.add(t);
+                    if (Main.tables.contains(t)) {
+                        Main.tables.get(Main.tables.indexOf(t)).setSocket(client);
+                        Log.log("re - registered" + t.toString());
+                    } else {
+                        Main.tables.add(t);
+                        Log.log("registered" + t.toString());
+                    }
                 }
-                Log.log("registered" + t.toString());
-
 
             } catch (IOException e) {
                 Log.log(e.getMessage());
