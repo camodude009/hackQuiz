@@ -73,7 +73,7 @@ public class QuizClient extends Service {
                         Packet toBeSent = toBeSendQueue.poll();
                         System.out.println("Found packet to be sent:"+ toBeSent);
                         String json = Serializer.serializeObject(toBeSent);
-                        output.write(toBeSent+"\n");
+                        output.write(json+"\n");
                         output.flush();
                         System.out.println("Sent Json packet: "+json);
                     }

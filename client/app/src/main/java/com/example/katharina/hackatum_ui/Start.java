@@ -25,28 +25,60 @@ public class Start extends AppCompatActivity {
             countdown = (CountdownPacket) Serializer.deserializePacket(jsonText, CountdownPacket.class);
         }
         if (countdown != null) {
-            TextView textView = findViewById(R.id.countdown);
-            textView.setText(countdown.getTime());
+            //TextView textView = findViewById(R.id.countdown);
+            //textView.setText(countdown.getTime());
         }
 
+        //RegisterPacket rp = new RegisterPacket(007, "Drop table");
+        //((CustomApplication)getApplication()).getMessageQeuue().add(rp);
 
         // use this to start and trigger a service
-        Intent i = new Intent(this, QuizClient.class);
+        //Intent i = new Intent(this, QuizClient.class);
         // potentially add data to the intent
         //i.putExtra("KEY1", "Value to be used by the service");
-        startService(i);
+       // startService(i);
+
+        new Timer(65).start();
 
     }
 
-    public void setTableNumber(int number) {
-        TextView txt = findViewById(R.id.tableNum);
+
+    public void setCountdownTextUI(int left) {
+        int minutes = left/60;
+        int seconds = left%60;
+        String formatted = String.format("%02d", minutes)+":"+String.format("%02d", seconds);
+        TextView txt = (TextView)findViewById(R.id.countdownBeforeQuiz);
+        txt.setText(formatted);
+    }
+
+    //Quick and dirty TODO clean
+    private  class Timer extends Thread {
+        int countdown = 10;
+
+        public Timer(int countdown) {
+            this.countdown = countdown;
+        }
+
+        @Override
+        public void run() {
+            while( countdown>0 ) {
+                countdown--;
+                //System.out.println(countdown);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setCountdownTextUI(countdown);
+                    }
+                });
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
     }
 
-    public void setTime(CountdownPacket countdown) {
-        this.countdown = countdown;
-        TextView txt = findViewById(R.id.countdown);
-        txt.setText(countdown.getTime());
-    }
 }
 
