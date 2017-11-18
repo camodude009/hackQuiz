@@ -7,6 +7,9 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.example.katharina.hackatum_ui.Question;
+import com.example.katharina.hackatum_ui.model.CountdownPacket;
+import com.example.katharina.hackatum_ui.model.QuestionPacket;
+import com.example.katharina.hackatum_ui.model.SummaryPacket;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -50,16 +53,32 @@ public class QuizClient extends Service {
             init("131.159.211.197", 4444);
             boolean running = true;
             while( running ) {
-                String s = "";
+
+                String line = "";
                 try {
-                    input.read();
+                    line = input.readLine();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                if( s != "" ) {
-                    System.out.println("DO sth with the input");
-                    
+                if( line != "" ) {
+                    System.out.println("Packet received:"+line);
+                    switch( Serializer.getTokenFromPacket(line) ) {
+                        case CountdownPacket.token:
+
+                            break;
+                        case QuestionPacket.token:
+                            Intent dialogIntent = new Intent(QuizClient.this, Question.class);
+                            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            dialogIntent.putExtra("JSON", line);
+                            startActivity(dialogIntent);
+                            break;
+
+                        case SummaryPacket.token:
+                            break;
+
+                    }
+
 
                 }
 
@@ -67,25 +86,25 @@ public class QuizClient extends Service {
 
 
 
-            //Example activity code
-            Intent dialogIntent = new Intent(QuizClient.this, Question.class);
-            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            dialogIntent.putExtra("JSON", "BlaBla");
-            startActivity(dialogIntent);
-
-
-            //TODO server interaction code
-
-
-
-            for(int i=0; i<1000; i++) {
-                Log.i("HackQuiz", "HelloWorld");
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+//            //Example activity code
+//            Intent dialogIntent = new Intent(QuizClient.this, Question.class);
+//            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            dialogIntent.putExtra("JSON", "BlaBla");
+//            startActivity(dialogIntent);
+//
+//
+//            //TODO server interaction code
+//
+//
+//
+//            for(int i=0; i<1000; i++) {
+//                Log.i("HackQuiz", "HelloWorld");
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
 
 
 
@@ -110,35 +129,35 @@ public class QuizClient extends Service {
             }
         }
 
-        public void sendString() {
-
-            // keep reading until "Over" is input
-            //while (!line.equals("Over")) {
-            //    try {
-            outpu.write(toSend);
-            //out.writeUTF(line);
-            outPw.flush();
-            System.out.printf("HW");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //        line = input.readLine();
-            //    } catch (IOException i) {
-            //        System.out.println(i);
-            //    }
-            //}
-
-            // close the connection
-            try {
-                input.close();
-                out.close();
-                socket.close();
-            } catch (IOException i) {
-                System.out.println(i);
-            }
-        }
+//        public void sendString() {
+//
+//            // keep reading until "Over" is input
+//            //while (!line.equals("Over")) {
+//            //    try {
+//            outpu.write(toSend);
+//            //out.writeUTF(line);
+//            outPw.flush();
+//            System.out.printf("HW");
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            //        line = input.readLine();
+//            //    } catch (IOException i) {
+//            //        System.out.println(i);
+//            //    }
+//            //}
+//
+//            // close the connection
+//            try {
+//                input.close();
+//                out.close();
+//                socket.close();
+//            } catch (IOException i) {
+//                System.out.println(i);
+//            }
+//        }
     }
 
 }
