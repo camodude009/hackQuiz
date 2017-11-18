@@ -41,8 +41,8 @@ public class Question extends AppCompatActivity {
         fancy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent dialogIntent = new Intent(Question.this, Color.class);
-                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent dialogIntent = new Intent(Question.this, Bar.class);
+                //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(dialogIntent);
             }
         });
@@ -80,6 +80,12 @@ public class Question extends AppCompatActivity {
         ProgressBar pb = findViewById(R.id.progressBar);
         pb.setMax(question.total-1);
         pb.setProgress(question.num);
+
+        ProgressBar countdownBar = findViewById(R.id.countdown_bar);
+        int max = (int)(question.ms/1000);
+        countdownBar.setMax(max);
+        countdownBar.setProgress(max);
+        new Timer(max).start();
     }
 
 //    public void nextQuestion(){ //Frage eingeben -> Don via client
@@ -118,6 +124,38 @@ public class Question extends AppCompatActivity {
         //}
     }
 
+    public void setCountdownTimer(long progress) {
+        ProgressBar countdownBar = findViewById(R.id.countdown_bar);
+        countdownBar.setProgress((int)progress);
+    }
 
+    //Quick and dirty TODO clean
+    private  class Timer extends Thread {
+        long countdown = 440;
+
+        public Timer(long countdown) {
+            this.countdown = countdown;
+        }
+
+        @Override
+        public void run() {
+            while( countdown>0 ) {
+                countdown--;
+                //System.out.println(countdown);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setCountdownTimer(countdown);
+                    }
+                });
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
 
 }

@@ -7,18 +7,18 @@
         android:name=".CustomApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="HackQuiz"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name="com.example.katharina.hackatum_ui.serverinterface.QuizClient" android:stopWithTask="true" />
-        <activity android:name=".Music" />
-        <activity android:name=".Color" />
-        <activity android:name=".Bar" />
-        <activity android:name=".Question" />
-        <activity android:name=".Result" />
-        <activity android:name=".Start" />
-        <activity android:name=".Enter">
+        <activity android:name=".Music" android:screenOrientation="portrait"/>
+        <activity android:name=".Color" android:screenOrientation="portrait"/>
+        <activity android:name=".Bar" android:screenOrientation="portrait"/>
+        <activity android:name=".Question" android:screenOrientation="portrait"/>
+        <activity android:name=".Result" android:screenOrientation="portrait"/>
+        <activity android:name=".Start" android:screenOrientation="portrait"/>
+        <activity android:name=".Enter" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

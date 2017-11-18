@@ -26,6 +26,10 @@ import java.util.Queue;
 //FIXME kill client on exit
 //TODO countdown quiz
 //FIXME http entities
+//FIXME Fix orientation changes (countdown table num)
+//TODO clear back stack
+
+//Feature
 public class QuizClient extends Service {
     static boolean initThreadRunning = false;
     Thread readThread = null;
