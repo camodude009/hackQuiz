@@ -1,3 +1,4 @@
+import model.AnswerPacket;
 import model.Packet;
 import model.QuestionPacket;
 import model.SummaryPacket;
@@ -17,6 +18,8 @@ public class Main {
 
     private static QuestionPacket currentQuestion;
 
+    private static long start_time;
+
     public static void main(String[] args) {
         Log.log("starting server...");
 
@@ -25,9 +28,9 @@ public class Main {
 
 
         boolean running = true;
-        long start_time = System.currentTimeMillis() + registration_time;
+        start_time = System.currentTimeMillis() + registration_time;
 
-        sleep(start_time - System.currentTimeMillis());
+        sleep(start_time - System.currentTimeMillis() + 500);
 
         for (int i = 0; i < questions.size(); i++) {
             currentQuestion = questions.get(i);
@@ -42,13 +45,16 @@ public class Main {
             sleep(question_time);
         }
 
-        for (Table t : tables) {
-            synchronized (t.packetQueue) {
-                //TODO: calculate correct and palce
-                int correct = 0;
-                int place = 0;
-                t.packetQueue.add(new SummaryPacket(questions.size(), correct, place));
-                t.packetQueue.notifyAll();
+        synchronized (tables) {
+            tables.sort((a, b) -> {
+                return Integer.compare(b.getScore(), a.getScore());
+            });
+
+            for (Table t : tables) {
+                synchronized (t.packetQueue) {
+                    t.packetQueue.add(new SummaryPacket(questions.size(), t.getScore(), tables.indexOf(t)));
+                    t.packetQueue.notifyAll();
+                }
             }
         }
 
@@ -66,5 +72,9 @@ public class Main {
 
     public static Packet getCurrentQuestion() {
         return currentQuestion;
+    }
+
+    public static long getCountdown() {
+        return start_time - System.currentTimeMillis();
     }
 }

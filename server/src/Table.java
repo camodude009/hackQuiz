@@ -28,7 +28,12 @@ public class Table {
 
     private int table;
     private String name;
+    private int score;
     private List<AnswerPacket> answers;
+
+    public List<AnswerPacket> getAnswers() {
+        return answers;
+    }
 
     public void handle(String message) {
         String token = message.substring(0, 3);
@@ -41,10 +46,28 @@ public class Table {
                 break;
 
             case AnswerPacket.token:
-                //AnswerPacket answer_request = (ServiceRequestPacket) Serializer.deserializePacket(message, ServiceRequestPacket.class);
-                //TODO: set answer
+                AnswerPacket answer_request = (AnswerPacket) Serializer.deserializePacket(message, AnswerPacket.class);
+                synchronized (answers) {
+                    answers.remove(answer_request);
+                    answers.add(answer_request);
+                }
+                calcScore();
                 break;
         }
+
+    }
+
+    private void calcScore() {
+        score = 0;
+        synchronized (answers) {
+            for (AnswerPacket a : answers) {
+                if (Main.questions.get(Main.questions.indexOf(a.id)).correct == a.answer) score++;
+            }
+        }
+    }
+
+    public int getScore(){
+        return score;
     }
 
     public Table(Socket client) {
@@ -147,10 +170,5 @@ public class Table {
 
     public Socket getSocket() {
         return socket;
-    }
-
-    public void setAnswer(AnswerPacket a) {
-        answers.remove(a);
-        answers.add(a);
     }
 }

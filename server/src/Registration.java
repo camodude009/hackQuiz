@@ -44,9 +44,8 @@ public class Registration extends Thread {
                     t.start();
 
                     synchronized (t.packetQueue) {
-                        //TODO: get proper countdown time from main
-                        if (System.currentTimeMillis() < 1000) {
-                            t.packetQueue.add(new CountdownPacket(0));
+                        if (Main.getCountdown() > 0) {
+                            t.packetQueue.add(new CountdownPacket(Main.getCountdown()));
                         } else {
                             t.packetQueue.add(Main.getCurrentQuestion());
                         }
@@ -54,7 +53,7 @@ public class Registration extends Thread {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.log(e.getMessage());
         }
 
 
