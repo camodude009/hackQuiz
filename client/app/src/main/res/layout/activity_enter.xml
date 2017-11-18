@@ -53,7 +53,7 @@
             android:layout_weight="5.1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Team Name"
+            android:hint="Team Name"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
             android:textSize="24sp" />
@@ -80,7 +80,7 @@
             android:layout_weight="5.1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Table Number"
+            android:hint="Table Number"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
             android:textSize="24sp" />
@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/Blue_Mediu"
-            android:text="Abschicken"
+            android:text="Participate"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <Space
