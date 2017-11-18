@@ -1,11 +1,11 @@
-<<<<<<< HEAD
+
 import java.net.*;
 import java.io.*;
 import java.lang.*;
-=======
+
 import com.google.gson.Gson;
 import model.QuestionPacket;
->>>>>>> origin/master
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,6 +46,9 @@ public class QuestionRetriever {
             while ((inputLine = in.readLine()) != null)
                 json += inputLine;
             in.close();
+
+            json = StringEscapeUtils.unesvapeHtml4(json);
+
             return (APIQuestionListPacket) gson.fromJson(json, APIQuestionListPacket.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -66,16 +69,10 @@ public class QuestionRetriever {
             usedQuestions.add(rndIndex);
             APIQuestionListPacket.APIQuestionPacket rndPacket = questionListPacket.results[rndIndex];
 
-<<<<<<< HEAD
-    json = StringEscapeUtils.unesvapeHtml4(json);
-
-    return (APIQuestionListPacket) gson.fromJson(json, APIQuestionListPacket);
-  }
-=======
             int corIndex = (int) (Math.random() * 4);
             ArrayList<String> answers = new ArrayList<String>(Arrays.asList(rndPacket.incorrect_answers));
             answers.add(corIndex, rndPacket.correct_answer);
->>>>>>> origin/master
+
 
             QuestionPacket question = new QuestionPacket(0, i, amount, rndPacket.question,
                     answers.get(0), answers.get(1), answers.get(2), answers.get(3), corIndex, ms);
