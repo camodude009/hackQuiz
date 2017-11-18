@@ -23,7 +23,7 @@ public class Bar extends AppCompatActivity {
     }
 
     private void init(){
-        Button back = findViewById(R.id.back);
+        Button back = findViewById(R.id.bar_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
