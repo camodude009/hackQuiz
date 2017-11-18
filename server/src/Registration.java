@@ -1,3 +1,6 @@
+import model.RegisterPacket;
+import model.ServiceRequestPacket;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,6 +10,28 @@ import java.net.Socket;
 public class Registration extends Thread {
 
     public void run() {
+        Log.log("creating packet handler...");
+        TableHandler tableHandler = (String message)-> {
+            String token = message.substring(0, 3);
+
+            switch (token) {
+                case "RGS":
+                    RegisterPacket register = (RegisterPacket) Serializer.deserializePacket(message, RegisterPacket.class);
+                    t.setTableNum(register.table);
+                    t.setName(register.name);
+
+                    break;
+                case ServiceRequestPacket.token:
+                    ServiceRequestPacket service_request = (ServiceRequestPacket) Serializer.deserializePacket(message, ServiceRequestPacket.class);
+                    System.out.println("Request recieved from " + t.getNumber() + ": " + request);
+                    //TODO: further forwarding (LED, etc.)
+                    break;
+                case "ANS":
+                    //TODO: write answer to teams answers
+                    break;
+            }
+        };
+
         Log.log("starting registration thread...");
 
         Log.log("creating server socket...");
@@ -26,27 +51,7 @@ public class Registration extends Thread {
                 Socket client = serverSocket.accept();
                 Log.log("connection recieved");
 
-                Table t = new Table(client);
-
-                t.addTableHandler((String s)->{
-                    String token = s.substring(0, 2);
-                    String message = s.substring(3);
-
-                    switch (token){
-                        case "RGS":
-                            //TODO: RegisterPacket r gson
-                            t.setTableNum(r.tableNum);
-                            t.setName(r.name);
-
-                            break;
-                        case "SRQ":
-                            //TODO: forward request
-                            break;
-                        case "ANS":
-                            //TODO: write answer to teams answers
-                            break;
-                    }
-                });
+                Table t = new Table(client, tableHandler);
 
                 synchronized (Main.tables) {
                     Main.tables.remove(t);

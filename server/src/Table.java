@@ -1,3 +1,5 @@
+import model.Packet;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,10 +21,12 @@ public class Table {
     private TableHandler tableHandler;
 
     private int number;
+    private boolean running;
 
 
-    public Table(Socket socket) {
-        this.socket = socket;
+    public Table(Socket client, TableHandler tableHandler) {
+        this.tableHandler = tableHandler;
+        setSocket(client);
 
         try {
             out = new PrintWriter(socket.getOutputStream());
@@ -32,17 +36,18 @@ public class Table {
         }
 
         messageReciever = new Thread(() -> {
-            while (true) {
-                String s = read();
-                if (s != null) tableHandler.handle(s);
-                else {
-                    Log.log(s);
+            while (running) {
+                try {
+                    String s = in.readLine();
+                    tableHandler.handle(s);
+                } catch (IOException e) {
+                    Log.log(e.getMessage());
                 }
             }
         });
 
         messageSender = new Thread(() -> {
-            while (true) {
+            while (running) {
                 synchronized (packetQueue) {
                     while (packetQueue.isEmpty()) {
                         try {
@@ -52,37 +57,46 @@ public class Table {
                         }
                     }
                     Packet p = packetQueue.poll();
-                    //TODO: send packet to client
+                    String message = Serializer.serializeObject(p);
+                    out.write(message);
                 }
             }
         });
 
+        running = true;
+        messageReciever.start();
+        messageSender.start();
+
     }
 
-    public void addTableHandler(TableHandler tableHandler) {
-        this.tableHandler = tableHandler;
+    public void terminate(){
+        running = false;
+        try {
+            socket.close();
+            messageReciever.join();
+            messageSender.join();
+        } catch (IOException e) {
+            Log.log(e.getMessage());
+        } catch (InterruptedException e) {
+            Log.log(e.getMessage());
+        }
     }
 
     public boolean equals(Object o) {
         return o instanceof Table && ((Table) o).number == this.number;
     }
 
-
-    public void write(String s) {
-        out.write(s);
-    }
-
-    public String read() {
+    public void setSocket(Socket client) {
+        this.socket = client;
         try {
-            return in.readLine();
+            out = new PrintWriter(socket.getOutputStream());
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             Log.log(e.getMessage());
         }
-        return null;
     }
 
-    public void setSocket(Socket client) {
-        this.socket = client;
+    public int getNumber() {
+        return number;
     }
-
 }

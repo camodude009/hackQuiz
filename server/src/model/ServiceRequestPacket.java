@@ -7,7 +7,7 @@ public class ServiceRequestPacket extends Packet {
     public static int CALL_BARKEEPER = 1;
     public static int CALL_ORDER_DRINK = 2;
 
-    int service;
+    public int service;
 
     public ServiceRequestPacket(int service) {
         setToken(this.token);
