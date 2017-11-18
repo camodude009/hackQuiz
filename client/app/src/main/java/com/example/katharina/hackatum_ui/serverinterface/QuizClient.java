@@ -7,6 +7,8 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.example.katharina.hackatum_ui.Question;
+import com.example.katharina.hackatum_ui.Result;
+import com.example.katharina.hackatum_ui.Start;
 import com.example.katharina.hackatum_ui.model.CountdownPacket;
 import com.example.katharina.hackatum_ui.model.QuestionPacket;
 import com.example.katharina.hackatum_ui.model.SummaryPacket;
@@ -51,30 +53,49 @@ public class QuizClient extends Service {
             super.run();
 
             init("131.159.211.197", 4444);
+            System.out.println("Connected");
             boolean running = true;
             while( running ) {
 
-                String line = "";
+                String line = null;
                 try {
+                    //Read from socket
+                    System.out.println("Reading buffer");
                     line = input.readLine();
+                    System.out.println("Packet received:"+line);
+
+                    //Write to socket
+                    //TODO write seocket stuff
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                if( line != "" ) {
+                if( line!=null && !line.isEmpty()) {
                     System.out.println("Packet received:"+line);
                     switch( Serializer.getTokenFromPacket(line) ) {
                         case CountdownPacket.token:
-
+                            Intent dialogIntent1 = new Intent(QuizClient.this, Start.class);
+                            dialogIntent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            dialogIntent1.putExtra("JSON", line);
+                            startActivity(dialogIntent1);
+                            //TODO IMplement backstack cleaning
                             break;
+
                         case QuestionPacket.token:
-                            Intent dialogIntent = new Intent(QuizClient.this, Question.class);
-                            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            dialogIntent.putExtra("JSON", line);
-                            startActivity(dialogIntent);
+                            Intent dialogIntent2 = new Intent(QuizClient.this, Question.class);
+                            dialogIntent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            dialogIntent2.putExtra("JSON", line);
+                            startActivity(dialogIntent2);
+                            //TODO IMplement backstack cleaning
                             break;
 
                         case SummaryPacket.token:
+                            Intent dialogIntent3 = new Intent(QuizClient.this, Result.class);
+                            dialogIntent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            dialogIntent3.putExtra("JSON", line);
+                            startActivity(dialogIntent3);
+                            //TODO IMplement backstack cleaning
                             break;
 
                     }
@@ -115,7 +136,6 @@ public class QuizClient extends Service {
                 // establish a connection
                 try {
                     socket = new Socket(ip, port);
-                    System.out.println("Connected");
 
                     input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     // sends output to the socket
@@ -126,6 +146,12 @@ public class QuizClient extends Service {
                 } catch (IOException i) {
                     System.out.println(i);
                 }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
 

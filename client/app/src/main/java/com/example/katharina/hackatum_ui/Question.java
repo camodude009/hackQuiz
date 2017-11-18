@@ -7,6 +7,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.katharina.hackatum_ui.model.QuestionPacket;
+import com.example.katharina.hackatum_ui.serverinterface.Serializer;
+
 /**
  * Created by Katharina on 18/11/2017.
  */
@@ -16,12 +19,15 @@ public class Question extends AppCompatActivity {
     private int numQuestionsPerRound;
     private int answer;
 
+    QuestionPacket question;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         String jsonText = getIntent().getExtras().getString("JSON");
+        question = (QuestionPacket)Serializer.deserializePacket(jsonText, QuestionPacket.class);
+
         System.out.println(jsonText);
     }
 
