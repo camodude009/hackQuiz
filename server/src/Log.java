@@ -4,6 +4,8 @@ import java.util.TimeZone;
 
 public class Log {
 
+    //Test
+
     public static void log(Object o) {
         System.out.println(getNiceDateTime(System.currentTimeMillis()) + "\t" + o.toString());
     }
