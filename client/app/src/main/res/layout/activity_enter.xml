@@ -90,5 +90,17 @@
             android:layout_height="match_parent"
             android:layout_weight="5.2" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/Blue_Mediu"
+            android:text="Abschicken"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5.5" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
