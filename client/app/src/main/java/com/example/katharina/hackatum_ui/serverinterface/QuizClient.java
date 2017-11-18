@@ -25,7 +25,7 @@ import java.util.Queue;
 
 //FIXME kill client on exit
 //TODO countdown quiz
-//Socket open at Registration
+//FIXME http entities
 public class QuizClient extends Service {
     static boolean initThreadRunning = false;
     Thread readThread = null;
@@ -54,8 +54,15 @@ public class QuizClient extends Service {
 
         @Override
         public void run() {
-            super.run();
+            //super.run();
             //Singleton
+            if( writeThread!=null) {
+                writeThread.interrupt();
+            }
+            if( readThread!=null) {
+                readThread.interrupt();
+            }
+
             if (QuizClient.initThreadRunning==true) {return;}
             else {QuizClient.initThreadRunning = true;}
 
@@ -99,7 +106,7 @@ public class QuizClient extends Service {
 
 
     public class WriteThread extends Thread {
-        boolean running = false;
+        boolean running = true;
         Socket socket = null;
         BufferedReader input = null;
         PrintWriter output = null;
@@ -142,9 +149,6 @@ public class QuizClient extends Service {
                 }
             }
 
-            //TODO restart init
-            readThread.interrupt();
-            writeThread.interrupt();
             new InitThread().start();
 
         }
@@ -164,7 +168,7 @@ public class QuizClient extends Service {
 
             @Override
             public void run() {
-                super.run();
+                //super.run();
 
                 boolean running = true;
                 while (running) {
@@ -220,11 +224,9 @@ public class QuizClient extends Service {
                         running = false;
                     }
 
-                    //TODO restart init
-                    readThread.interrupt();
-                    writeThread.interrupt();
-                    new InitThread().start();
                 }
+
+                new InitThread().start();
 
             }
         }

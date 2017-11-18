@@ -78,7 +78,7 @@ public class Question extends AppCompatActivity {
         });
 
         ProgressBar pb = findViewById(R.id.progressBar);
-        pb.setMax(question.total);
+        pb.setMax(question.total-1);
         pb.setProgress(question.num);
     }
 
@@ -91,7 +91,7 @@ public class Question extends AppCompatActivity {
     private void setQuestion(){
         if(question != null){
             TextView qNum = findViewById(R.id.questionNum);
-            qNum.setText("Question "+question.num+"/"+question.total);
+            qNum.setText("Question "+(question.num+1)+"/"+question.total);
 
             TextView textView = findViewById(R.id.question);
             textView.setText(question.question);
@@ -113,7 +113,7 @@ public class Question extends AppCompatActivity {
     public void sendAnswer(int answer){
         //if (answered==false) {
             CustomApplication ca = (CustomApplication)getApplication();
-            AnswerPacket ap = new AnswerPacket(answer, question.num, ca.getTableNum());
+            AnswerPacket ap = new AnswerPacket(ca.getTableNum(), answer, question.num );
             ca.getMessageQueue().add(ap); //Send answer message
         //}
     }

@@ -23,6 +23,7 @@ public class Result extends AppCompatActivity {
 
         String jsonText = getIntent().getExtras().getString("JSON");
         summary = (SummaryPacket) Serializer.deserializePacket(jsonText, SummaryPacket.class);
+        init();
     }
 
     private void init(){

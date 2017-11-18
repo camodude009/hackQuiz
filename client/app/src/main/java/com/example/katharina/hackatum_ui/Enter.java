@@ -22,11 +22,6 @@ public class Enter extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter);
 
-        //Start client interface
-        Intent i = new Intent(this, QuizClient.class);
-        //i.putExtra("KEY1", "Value to be used by the service");
-        startService(i);
-
         //Setup button
         Button submitBtn = (Button)findViewById(R.id.submit);
         submitBtn.setOnClickListener(new Button.OnClickListener() {
@@ -43,7 +38,13 @@ public class Enter extends AppCompatActivity {
                     //Number and name should be sanitized here
                     //=> Invoking the send registration message on our lient
                     int tableNr = Integer.parseInt( tableNrEdt.getText().toString() );
+
                     RegisterPacket rp = new RegisterPacket( tableNr, nameString );
+                    //Start client interface
+                    Intent i = new Intent(Enter.this, QuizClient.class);
+                    //i.putExtra("KEY1", "Value to be used by the service");
+                    startService(i);
+
                     ((CustomApplication)getApplication()).getMessageQueue().add(rp);
                     ((CustomApplication)getApplication()).setTableNum(tableNr);
                 } catch(Exception e) { //TODO specify exception
