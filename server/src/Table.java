@@ -79,8 +79,10 @@ public class Table {
         switch (token) {
             case ServiceRequestPacket.token:
                 ServiceRequestPacket service_request = (ServiceRequestPacket) Serializer.deserializePacket(message, ServiceRequestPacket.class);
-                System.out.println("service request received from " + table + ": " + service_request);
-                //TODO: further forwarding (LED, etc.)
+                Log.log("service request received from " + table + ": " + service_request);
+                if (service_request.service == ServiceRequestPacket.CHANGE_COLOR) {
+                    Raspi.makeColorChange();
+                }
                 break;
 
             case AnswerPacket.token:

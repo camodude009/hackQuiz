@@ -1,15 +1,10 @@
-import model.QuestionPacket;
-
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.List;
-
 public class Test {
 
     public static void main(String[] args) {
 
+       /*
         List<QuestionPacket> questions;
+
 
         QuestionRetriever r = new QuestionRetriever(100);
         questions = r.getQuestionPackets(100, 60 * 1000);
@@ -37,6 +32,10 @@ public class Test {
         } catch (IOException e) {
             Log.log(e.getMessage());
         }
+
+        */
+
+        Raspi.makeColorChange();
 
     }
 }

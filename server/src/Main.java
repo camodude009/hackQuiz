@@ -11,8 +11,8 @@ public class Main {
     public final static List<Table> tables = new ArrayList<>();
 
 
-    public static final long registration_time = 1000 * 30;
-    public static final long question_time = 1000 * 20;
+    public static final long registration_time = 1000 * 60 * 5;
+    public static final long question_time = 1000 * 45;
 
     public static List<QuestionPacket> questions;
     private static QuestionPacket currentQuestion;
@@ -55,7 +55,7 @@ public class Main {
 
         for (int i = 0; i < questions.size(); i++) {
             currentQuestion = questions.get(i);
-            Log.log("posing question " + i + "...");
+            Log.log("posing question " + i);
             synchronized (tables) {
                 for (Table t : tables) {
                     if (t.isRunning()) {
@@ -70,7 +70,7 @@ public class Main {
         }
 
         synchronized (tables) {
-            System.out.println("creating rankings...");
+            Log.log("creating rankings...");
             tables.sort((a, b) -> {
                 return Integer.compare(b.getScore(), a.getScore());
             });
