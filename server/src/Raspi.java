@@ -22,7 +22,7 @@ public class Raspi {
 
     public static void makeColorChange(String mode) {
         try {
-            String serverAddress = "131.159.212.8";
+            String serverAddress = "hackquiz2017-raspi.ddns.net";
             Socket s = new Socket(serverAddress, 4445);
 
             PrintWriter out = new PrintWriter(s.getOutputStream());

@@ -46,7 +46,7 @@ let quiz = {
   startTime: null
 }
 
-newQuiz( Date.now()+50000);
+newQuiz( Date.now()+30000);
 
 //configure next quiz
 app.post("/config/quiz", (req, res) => {
@@ -105,7 +105,7 @@ function newQuiz(startTime) {
 }
 
 function sendMatchingToServer() {
-  fetch("http://hackquiz2017-server.ddns.net:8000/matching", {
+  fetch("http://127.0.0.1:8000/matching", {
     method: "POST",
     body: {matching: quiz.matching}
   })
