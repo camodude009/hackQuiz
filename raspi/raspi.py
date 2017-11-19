@@ -117,7 +117,7 @@ if __name__ == "__main__":
     
     # Intialize the library (must be called once before other functions).
     strip.begin()
-    leds_on(Color(255, 0, 0))
+    leds_off()
 
     print('Waiting for Connection')
 

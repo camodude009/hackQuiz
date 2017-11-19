@@ -29,8 +29,6 @@ public class Main {
             play();
         });
 
-        //play();
-
     }
 
     public static void play() {

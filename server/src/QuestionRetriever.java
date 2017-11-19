@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 import model.QuestionPacket;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class QuestionRetriever {
                 json += inputLine;
             in.close();
 
-            //json = StringEscapeUtils.unesvapeHtml4(json);
+            json = StringEscapeUtils.unescapeHtml4(json);
 
             return (APIQuestionListPacket) gson.fromJson(json, APIQuestionListPacket.class);
         } catch (IOException e) {

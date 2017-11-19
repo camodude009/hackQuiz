@@ -11,7 +11,7 @@ public class Raspi {
     public static final String PREVIOUS = "prev";
 
     public static void animation(int r, int g, int b) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 8; i++) {
             makeColorChange(Raspi.OFF);
             Main.sleep(250);
             makeColorChange(Raspi.color(r, g, b));

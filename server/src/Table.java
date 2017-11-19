@@ -80,9 +80,10 @@ public class Table {
             case ServiceRequestPacket.token:
                 ServiceRequestPacket service_request = (ServiceRequestPacket) Serializer.deserializePacket(message, ServiceRequestPacket.class);
                 Log.log("service request received from " + table + ": " + service_request);
-                if (service_request.service == ServiceRequestPacket.CHANGE_COLOR) {
-                    //TODO: set color
-                    //Raspi.makeColorChange();
+                if (service_request.service == ServiceRequestPacket.CHOOSE_COLOR) {
+                    Raspi.makeColorChange(service_request.data);
+                } else if (service_request.service == ServiceRequestPacket.CALL_BARKEEPER) {
+                    //TODO: potentially play sound
                 }
                 break;
 
@@ -199,10 +200,6 @@ public class Table {
                 '}';
     }
 
-    public void setTableNum(int tableNum) {
-        this.table = tableNum;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -213,5 +210,9 @@ public class Table {
 
     public int getTableNum() {
         return table;
+    }
+
+    public void setTableNum(int tableNum) {
+        this.table = tableNum;
     }
 }

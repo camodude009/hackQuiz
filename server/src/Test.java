@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Test {
 
     public static void main(String[] args) {
@@ -37,8 +39,7 @@ public class Test {
 
 
         //Raspi.makeColorChange(Raspi.RAINBOWCYCLE);
-
-        Raspi.winAnimation();
+        Raspi.animation(255,255,0);
 
     }
 }
