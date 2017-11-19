@@ -21,15 +21,16 @@ public class Main {
 
     public static void main(String[] args) {
 
+        /*
         QuizHttpServer httpServer = new QuizHttpServer(8000);
-
         httpServer.onMatching(matching -> {
             Log.log("matching recieved");
             Log.log(matching.toString());
             play();
         });
+        */
 
-        //play();
+        play();
     }
 
     public static void play() {
