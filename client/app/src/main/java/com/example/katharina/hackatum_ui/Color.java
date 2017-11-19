@@ -120,14 +120,14 @@ public class Color extends AppCompatActivity {
     private String getRgb(int selection){
         switch (selection) {
             case 0: return color(0,0,0);
-            case 1: return color(255,105,39);
-            case 2: return color(255,204, 2);
-            case 3: return color(255, 249, 105);
-            case 4: return color(255, 249, 26);
-            case 5: return color(255, 154, 204);
-            case 6: return color(255, 111, 191);
-            case 7: return color(255, 48, 63);
-            default: return  color (255, 255, 64);
+            case 1: return color(118,14, 204);
+            case 2: return color(204, 2, 00);
+            case 3: return color( 200, 40, 0);
+            case 4: return color(  249, 73, 14);
+            case 5: return color( 154, 204, 02);
+            case 6: return color( 111, 191, 216);
+            case 7: return color(48, 63, 159);
+            default: return  color (250, 0, 250);
         }
     }
 

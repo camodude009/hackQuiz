@@ -92,7 +92,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:background="@drawable/rounded_button"
-                android:backgroundTint="@color/DarkOrange" />
+                android:backgroundTint="@color/highlight" />
 
             <Button
                 android:id="@+id/button2"

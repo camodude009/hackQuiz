@@ -77,7 +77,7 @@ public class QuizClient extends Service {
             while(true) {
                 // establish a connection
                 try {
-                    socket = new Socket("131.159.211.197", 4444);
+                    socket = new Socket("hackquiz2017-server.ddns.net", 4444);
 
                     input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     // sends output to the socket
