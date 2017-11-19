@@ -1,11 +1,14 @@
 package com.example.katharina.hackatum_ui.serverinterface;
 
+import android.app.ActivityManager;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
 import com.example.katharina.hackatum_ui.CustomApplication;
+import com.example.katharina.hackatum_ui.Enter;
 import com.example.katharina.hackatum_ui.Question;
 import com.example.katharina.hackatum_ui.Result;
 import com.example.katharina.hackatum_ui.Start;
@@ -21,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Queue;
 
 //FIXME kill client on exit
@@ -29,11 +33,14 @@ import java.util.Queue;
 //FIXME Fix orientation changes (countdown table num)
 //TODO clear back stack
 //TODO
+
+//TODO implement state for question
 //Feature
 public class QuizClient extends Service {
     static boolean initThreadRunning = false;
     Thread readThread = null;
     Thread writeThread = null;
+    String lastCmd = "";
 
     @Override
     public void onCreate() {
@@ -190,30 +197,34 @@ public class QuizClient extends Service {
                     //Receiving code -> transitions in the activities
                     if (line != null && !line.isEmpty()) {
                         System.out.println("Packet received:" + line);
+                        lastCmd = line; //???
+
                         switch (Serializer.getTokenFromPacket(line)) {
                             case CountdownPacket.token:
                                 Intent dialogIntent1 = new Intent(QuizClient.this, Start.class);
-                                dialogIntent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 dialogIntent1.putExtra("JSON", line);
-                                dialogIntent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                dialogIntent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(dialogIntent1);
+
+//                                ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+//                                List<ActivityManager.RunningTaskInfo> taskInfo = activityManager .getRunningTasks(1);
+//                                ComponentName componentInfo = taskInfo.get(0).baseActivity;
+
                                 //TODO IMplement backstack cleaning
                                 break;
 
                             case QuestionPacket.token:
                                 Intent dialogIntent2 = new Intent(QuizClient.this, Question.class);
-                                dialogIntent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 dialogIntent2.putExtra("JSON", line);
-                                dialogIntent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                dialogIntent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(dialogIntent2);
                                 //TODO IMplement backstack cleaning
                                 break;
 
                             case SummaryPacket.token:
                                 Intent dialogIntent3 = new Intent(QuizClient.this, Result.class);
-                                dialogIntent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 dialogIntent3.putExtra("JSON", line);
-                                dialogIntent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                dialogIntent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(dialogIntent3);
                                 //TODO IMplement backstack cleaning
                                 break;
