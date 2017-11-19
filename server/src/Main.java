@@ -11,8 +11,8 @@ public class Main {
     public final static List<Table> tables = new ArrayList<>();
 
 
-    public static final long registration_time = 1000 * 60;
-    public static final long question_time = 1000 * 30;
+    public static final long registration_time = 1000 * 30;
+    public static final long question_time = 1000 * 15;
 
     public static List<QuestionPacket> questions;
     private static QuestionPacket currentQuestion;
@@ -26,19 +26,18 @@ public class Main {
         httpServer.onMatching(matching -> {
             Log.log("matching recieved");
             Log.log(matching.toString());
-            // play();
+            play();
         });
 
-        play();
+        //play();
 
     }
 
     public static void play() {
         Log.log("loading questions...");
 
-
-        QuestionRetriever retriever = new QuestionRetriever(100, true);
-        questions = retriever.getQuestionPackets(3, question_time);
+        QuestionRetriever retriever = new QuestionRetriever(2, true);
+        questions = retriever.getQuestionPackets(2, question_time);
 
         Log.log("starting server...");
 
@@ -49,7 +48,7 @@ public class Main {
         boolean running = true;
         start_time = System.currentTimeMillis() + registration_time;
 
-        sleep(start_time - System.currentTimeMillis() + 500);
+        sleep(start_time - System.currentTimeMillis() + 1500);
 
         for (int i = 0; i < questions.size(); i++) {
             currentQuestion = questions.get(i);
@@ -64,7 +63,7 @@ public class Main {
                     }
                 }
             }
-            sleep(question_time);
+            sleep(question_time + 1500);
         }
 
         synchronized (tables) {
@@ -77,6 +76,18 @@ public class Main {
                 synchronized (t.packetQueue) {
                     t.packetQueue.add(new SummaryPacket(questions.size(), t.getScore(), tables.indexOf(t) + 1));
                     t.packetQueue.notifyAll();
+                }
+            }
+
+            for (Table t : tables) {
+                if (t.getTableNum() == 1) {
+                    if (tables.indexOf(t) == 0) {
+                        //win
+                        Raspi.animation(0, 255, 00);
+                    } else {
+                        //lose
+                        Raspi.animation(255, 0, 0);
+                    }
                 }
             }
         }

@@ -81,7 +81,8 @@ public class Table {
                 ServiceRequestPacket service_request = (ServiceRequestPacket) Serializer.deserializePacket(message, ServiceRequestPacket.class);
                 Log.log("service request received from " + table + ": " + service_request);
                 if (service_request.service == ServiceRequestPacket.CHANGE_COLOR) {
-                    Raspi.makeColorChange();
+                    //TODO: set color
+                    //Raspi.makeColorChange();
                 }
                 break;
 
@@ -208,5 +209,9 @@ public class Table {
 
     public boolean isRunning() {
         return running;
+    }
+
+    public int getTableNum() {
+        return table;
     }
 }

@@ -18,7 +18,7 @@ public class QuestionRetriever {
     private ArrayList<Integer> usedQuestions;
 
     public QuestionRetriever() {
-        this(20);
+        this(20, false);
     }
 
     public QuestionRetriever(int amount, boolean hard) {
