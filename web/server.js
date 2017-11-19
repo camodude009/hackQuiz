@@ -9,7 +9,7 @@ app.use(express.static('public'));
 
 app.use("/config", bodyParser.json());
 
-http.listen(8888, () => console.log('listening on *:8888'));
+http.listen(80, () => console.log('listening on *:80'));
 
 let server = io(http);
 
@@ -105,7 +105,7 @@ function newQuiz(startTime) {
 }
 
 function sendMatchingToServer() {
-  fetch("http://127.0.0.1:8000/matching", {
+  fetch("http://hackquiz2017-server.ddns.net:8000/matching", {
     method: "POST",
     body: {matching: quiz.matching}
   })

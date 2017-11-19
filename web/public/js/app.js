@@ -83,7 +83,7 @@ let app = new Vue({
     }
   },
   created() {
-    this.socket = io("ws://"+window.location.hostname+":8888");
+    this.socket = io("ws://"+window.location.hostname+":80");
 
     this.socket.on("quiz", this.onNextQuiz);
     this.socket.on("matching", this.onMatching);
