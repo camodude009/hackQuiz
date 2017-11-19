@@ -9,7 +9,7 @@ app.use(express.static('public'));
 
 app.use("/config", bodyParser.json());
 
-http.listen(80, () => console.log('listening on *:80'));
+http.listen(8888, () => console.log('listening on *:8888'));
 
 let server = io(http);
 

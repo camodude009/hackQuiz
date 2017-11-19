@@ -76,14 +76,14 @@ let app = new Vue({
     },
     quiz: {
       matching: null,
-      remainingTime: "0",
+      remainingTime: "00:00:00",
       startTime: null,
       timer: null, //used for updating 'remainingTime'
       animTimeout: null
     }
   },
   created() {
-    this.socket = io("ws://"+window.location.hostname+":80");
+    this.socket = io("ws://"+window.location.hostname+":8888");
 
     this.socket.on("quiz", this.onNextQuiz);
     this.socket.on("matching", this.onMatching);
