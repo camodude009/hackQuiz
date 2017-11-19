@@ -63,14 +63,20 @@
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-        <TextView
-            android:id="@+id/question"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:text="This is a question bla bla bla..."
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textSize="24sp" />
+            android:layout_weight="5">
+
+            <TextView
+                android:id="@+id/question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="This is a question bla bla bla..."
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24sp" />
+        </ScrollView>
 
         <Space
             android:layout_width="match_parent"

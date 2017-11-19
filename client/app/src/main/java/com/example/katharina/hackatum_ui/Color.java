@@ -12,10 +12,25 @@ import android.widget.Button;
 public class Color  extends AppCompatActivity {
     private int selection = 0;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_color);
+        init();
+    }
+
     private void init(){
         selection = -1;
 
-        Button button = findViewById(R.id.mood_black);
+        Button button = findViewById(R.id.music_back);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        button = findViewById(R.id.mood_black);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
