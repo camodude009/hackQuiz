@@ -1,10 +1,13 @@
 package com.example.katharina.hackatum_ui;
 
 import android.content.res.ColorStateList;
+import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.katharina.hackatum_ui.model.ServiceRequestPacket;
 
 /**
  * Created by Katharina on 18/11/2017.
@@ -107,8 +110,31 @@ public class Color extends AppCompatActivity {
 
     private void selectButton(Button button, int selection) {
         this.selection = selection;
-        button.setVisibility(View.INVISIBLE);
+        String color = getRgb(selection);
+
+        ServiceRequestPacket srp = new ServiceRequestPacket(ServiceRequestPacket.CHOOSE_COLOR, color);
+        ((CustomApplication)getApplication()).getMessageQueue().add(srp);
         finish();
+    }
+
+    private String getRgb(int selection){
+        switch (selection) {
+            case 0: return color(0,0,0);
+            case 1: return color(255,105,39);
+            case 2: return color(255,204, 2);
+            case 3: return color(255, 249, 105);
+            case 4: return color(255, 249, 26);
+            case 5: return color(255, 154, 204);
+            case 6: return color(255, 111, 191);
+            case 7: return color(255, 48, 63);
+            default: return  color (255, 255, 64);
+        }
+    }
+
+    public static String color(int r, int g, int b) {
+        return "color:" + String.format("%03d", r & 0xff) + ","
+                + String.format("%03d", g & 0xff) + ","
+                + String.format("%03d", b & 0xff);
     }
 
 }
