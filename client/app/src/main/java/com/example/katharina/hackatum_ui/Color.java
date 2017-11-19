@@ -1,5 +1,6 @@
 package com.example.katharina.hackatum_ui;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.Button;
  * Created by Katharina on 18/11/2017.
  */
 
-public class Color  extends AppCompatActivity {
+public class Color extends AppCompatActivity {
     private int selection = 0;
 
     @Override
@@ -19,78 +20,95 @@ public class Color  extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         selection = -1;
 
-        Button button = findViewById(R.id.music_back);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button btnBack = findViewById(R.id.color_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                selectButton(btnBack, -1);
             }
         });
 
-        button = findViewById(R.id.mood_black);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button button0 = findViewById(R.id.mood_black);
+        button0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                selectButton(button0, 0);
             }
         });
 
-        button = findViewById(R.id.mood_brown);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button button1 = findViewById(R.id.mood_brown);
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selection = 0;
-                finish();
+                selectButton(button1, 1);
             }
         });
 
-        button = findViewById(R.id.mood_red);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button button2 = findViewById(R.id.mood_red);
+        button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selection = 1;
-                finish();
+                selectButton(button2, 2);
             }
         });
 
-        button = findViewById(R.id.mood_orange);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button button3 = findViewById(R.id.mood_orange);
+        button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selection = 2;
-                finish();
+                selectButton(button3, 3);
             }
         });
 
-        button = findViewById(R.id.mood_yellow);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button button4 = findViewById(R.id.mood_yellow);
+        button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selection = 3;
-                finish();
+                selectButton(button4, 4);
             }
         });
 
-        button = findViewById(R.id.mood_green);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button button5 = findViewById(R.id.mood_green);
+        button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selection = 4;
-                finish();
+                selectButton(button5, 5);
             }
         });
 
-        button = findViewById(R.id.mood_blue);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button button6 = findViewById(R.id.mood_lightBlue);
+        button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selection = 5;
-                finish();
+                selectButton(button6, 6);
             }
         });
+
+        final Button button7 = findViewById(R.id.mood_blue);
+        button7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectButton(button7, 7);
+            }
+        });
+
+        final Button button8 = findViewById(R.id.mood_pink);
+        button8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectButton(button8, 8);
+            }
+        });
+
+    }
+
+    private void selectButton(Button button, int selection) {
+        this.selection = selection;
+        button.setVisibility(View.INVISIBLE);
+        finish();
     }
 
 }

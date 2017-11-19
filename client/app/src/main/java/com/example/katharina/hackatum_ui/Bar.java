@@ -51,14 +51,6 @@ public class Bar extends AppCompatActivity {
             }
         });
 
-        Button drink_recommend = findViewById(R.id.drink_recommend);
-        drink_recommend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO transition to activity_drink_recommend
-            }
-        });
-
         Button color = findViewById(R.id.colour);
         color.setOnClickListener(new View.OnClickListener() {
             @Override

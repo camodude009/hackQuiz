@@ -79,24 +79,6 @@
                 android:visibility="visible" />
 
             <Button
-                android:id="@+id/drink_recommend"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:backgroundTint="@color/Blue_Mediu"
-                android:baselineAligned="false"
-                android:shadowColor="@color/darkBlue"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="0"
-                android:text="Drink Recommendation"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                android:textColorHighlight="@color/Cinnbar"
-                android:textSize="24sp"
-                android:visibility="visible" />
-
-            <Button
                 android:id="@+id/colour"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
