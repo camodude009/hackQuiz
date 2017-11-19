@@ -28,13 +28,6 @@ import java.util.List;
 import java.util.Queue;
 
 //FIXME kill client on exit
-//TODO countdown quiz
-//FIXME http entities
-//FIXME Fix orientation changes (countdown table num)
-//TODO clear back stack
-//TODO
-
-//TODO implement state for question
 //Feature
 public class QuizClient extends Service {
     static boolean initThreadRunning = false;
