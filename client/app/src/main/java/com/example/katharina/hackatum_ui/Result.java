@@ -26,6 +26,11 @@ public class Result extends AppCompatActivity {
         init();
     }
 
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
+
     private void init(){
         showPoints(summary.correct, summary.total);
         setPlace(summary.place);

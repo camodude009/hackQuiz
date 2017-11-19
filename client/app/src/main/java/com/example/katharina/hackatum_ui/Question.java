@@ -38,6 +38,11 @@ public class Question extends AppCompatActivity {
         System.out.println(jsonText);
     }
 
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
+
     private void init(){
         setQuestion();
 

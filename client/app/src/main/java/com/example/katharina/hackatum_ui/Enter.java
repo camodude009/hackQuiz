@@ -53,4 +53,9 @@ public class Enter extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
 }

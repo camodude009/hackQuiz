@@ -31,6 +31,11 @@ public class Start extends AppCompatActivity {
         table.setText(""+tableNum);
     }
 
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
+
 
     public void setCountdownTextUI(long left) {
         long minutes = left/60;
