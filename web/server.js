@@ -25,19 +25,19 @@ let tables = [{
 	}];
 
 let users = [{info: {
-  name: "a",
+  name: "Gustav",
   gender: 0, age: 1, hair: 4, color: 3, alcohol: 2
 }},{info: {
-  name: "b",
+  name: "Donald",
   gender: 0, age: 1, hair: 4, color: 3, alcohol: 1
 }},{info: {
-  name: "c",
+  name: "Klaus",
   gender: 2, age: 3, hair: 4, color: 1, alcohol: 2
 }},{info: {
-  name: "d",
+  name: "Peter",
   gender: 0, age: 0, hair: 2, color: 1, alcohol: 0
 }},{info: {
-  name: "e",
+  name: "Ute",
   gender: 2, age: 2, hair: 1, color: 0, alcohol: 0
 }}];
 
@@ -50,11 +50,16 @@ newQuiz( Date.now()+50000);
 
 //configure next quiz
 app.post("/config/quiz", (req, res) => {
+	console.log(quiz.running, req.body);
   if (!quiz.running && req.body && req.body.startTime) {
     newQuiz(Date.now() + parseInt(req.body.startTime));
     console.log("Quiz: ", quiz);
   }
   res.end();
+});
+
+app.get("/users", (req, res) => {
+	res.send(users.map(u => u.info));
 });
 
 //configure tables
@@ -89,7 +94,7 @@ function newQuiz(startTime) {
       console.log(quiz.matching);
       //send table numbers to all users
       users.filter(el => el.info).forEach(usr => {
-        usr.matching = {table: quiz.matching.find(m => m.users.find(u => u == usr.info.name)).table};
+        usr.matching = quiz.matching.find(m => m.users.find(u => u == usr.info.name));
         if (usr.socket) usr.socket.emit("matching", usr.matching);
       })
 
@@ -100,7 +105,7 @@ function newQuiz(startTime) {
 }
 
 function sendMatchingToServer() {
-  fetch("http://131.159.211.197:8000/matching", {
+  fetch("http://hackquiz2017-server.ddns.net:8000/matching", {
     method: "POST",
     body: {matching: quiz.matching}
   })
@@ -137,6 +142,7 @@ server.on('connection', (socket) => {
           if (!users.find(el => el.info && el.info.name == usr.name)) {
             user.info = usr;
             user.token = getToken();
+						console.log("User registered: " + user.info.name);
             callback({token: user.token});
           } else {
             callback({error: "Name already taken!"});
@@ -157,7 +163,8 @@ server.on('connection', (socket) => {
 function onQuizStart(onStart) {
   console.log((quiz.startTime - Date.now()) / 1000);
   //wait till quiz starts
-  setTimeout(() => {
+	if (quiz.timer) clearTimeout(quiz.timer);
+  quiz.timer = setTimeout(() => {
     //check if startTime has changed and wait again if yes
     if (Date.now() >= quiz.startTime)
       onStart();

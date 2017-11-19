@@ -143,19 +143,26 @@ html, body, #vue {
 
 }
 
-.matching-wrapper span:first-child {
+.matching-wrapper > span:first-child {
   text-transform: uppercase;
 }
 
-.matching-wrapper span:nth-child(2) {
-  margin-top: 20px;
+.matching-wrapper > span:nth-child(2), .matching-wrapper > span:nth-child(4) {
+  margin-top: 25px;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
-.matching-wrapper span:nth-child(3) {
-  font-size: 25px;
+.matching-wrapper > span:nth-child(3) {
   text-transform: uppercase;
-  font-weight: 500;
 }
+
+.matching-wrapper > span:nth-child(3), .matching-wrapper > span:nth-child(5) {
+  font-size: 23px;
+  font-weight: 100;
+}
+
+
 
 .user-wrapper {
   transform: translateY(-60px);

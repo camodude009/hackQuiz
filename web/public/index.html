@@ -44,6 +44,8 @@
         <span>Hurray!<br />The Quiz is starting!</span>
         <span>Please seat at</span>
         <span>Table {{quiz.matching.table}}</span>
+        <span>Together with</span>
+        <span><span v-for="u in quiz.matching.users">{{u != user.name ? u+" " : ""}}</span></span>
       </div>
     </div>
     <div class="user-wrapper">
