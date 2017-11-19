@@ -11,8 +11,8 @@ public class Main {
     public final static List<Table> tables = new ArrayList<>();
 
 
-    public static final long registration_time = 1000 * 30;
-    public static final long question_time = 1000 * 15;
+    public static final long registration_time = 1000 * 15;
+    public static final long question_time = 1000 * 12;
 
     public static List<QuestionPacket> questions;
     private static QuestionPacket currentQuestion;
@@ -80,7 +80,7 @@ public class Main {
             }
 
             for (Table t : tables) {
-                if (t.getTableNum() == 1) {
+                if (t.getTableNum() == 0) {
                     if (tables.indexOf(t) == 0) {
                         //win
                         Raspi.animation(0, 255, 00);
