@@ -105,7 +105,7 @@ function newQuiz(startTime) {
 }
 
 function sendMatchingToServer() {
-  fetch("http://127.0.0.1:8000/matching", {
+  fetch("http://hackquiz2017-server.ddns.net:8000/matching", {
     method: "POST",
     body: {matching: quiz.matching}
   })

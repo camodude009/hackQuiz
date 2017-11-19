@@ -76,7 +76,7 @@ let app = new Vue({
     },
     quiz: {
       matching: null,
-      remainingTime: "0",
+      remainingTime: "00:00:00",
       startTime: null,
       timer: null, //used for updating 'remainingTime'
       animTimeout: null
