@@ -20,13 +20,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Space
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="33dp" />
+            android:layout_height="67dp"
+            android:layout_weight="5"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/fancyButton3"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/martini"
+                android:backgroundTint="@color/colorAccent"
+                android:drawable="@drawable/martini"
+                tools:text=" " />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_weight="5"
             android:orientation="horizontal">
 
             <TextView
@@ -59,6 +78,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="5"
             android:orientation="horizontal">
 
             <TextView
@@ -97,6 +117,7 @@
             android:id="@+id/place"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="5"
             android:text="Your Team won the 000 place!"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/Blue_Mediu"

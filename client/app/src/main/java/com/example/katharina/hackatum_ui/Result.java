@@ -1,7 +1,10 @@
 package com.example.katharina.hackatum_ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.katharina.hackatum_ui.model.CountdownPacket;
@@ -34,6 +37,16 @@ public class Result extends AppCompatActivity {
     private void init(){
         showPoints(summary.correct, summary.total);
         setPlace(summary.place);
+
+        Button fancy = findViewById(R.id.fancyButton);
+        fancy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent dialogIntent = new Intent(Result.this, Bar.class);
+                //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(dialogIntent);
+            }
+        });
     }
 
     private void showPoints(int correct, int total){
@@ -47,6 +60,6 @@ public class Result extends AppCompatActivity {
         if(place == 1) addone = "st";
         else if(place == 2) addone = "nd";
         else if(place == 3) addone = "rd";
-        textView.setText("Your team won the "+place+addone+"place");
+        textView.setText("Your team won the "+place+addone+" place");
     }
 }

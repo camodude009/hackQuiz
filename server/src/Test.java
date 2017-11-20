@@ -39,7 +39,8 @@ public class Test {
 
 
         //Raspi.makeColorChange(Raspi.RAINBOWCYCLE);
-        Raspi.animation(255,255,0);
+        Raspi.makeColorChange(Raspi.RAINBOWCYCLE);
+        //Raspi.animation(255,255,0);
 
     }
 }
